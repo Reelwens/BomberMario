@@ -1,0 +1,18 @@
+body{
+	background:#eee;
+	font-family:Helvetica,Arial;
+	font-size:14px;
+}
+
+.clearBoth{
+	clear: both;
+}
+
+table td
+{
+	width: 30px;
+	height: 30px;
+	background: #C80000;
+	text-align: center;
+	vertical-align: middle;
+}
