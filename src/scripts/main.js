@@ -136,32 +136,72 @@ var bombe = function(posX, posY, type)
 		setTimeout(function(){
 			that.bombe_dis.remove();
             
-            //étude de l'explosion de la bombe pour le coin haut gauche
-			if(that.posX == 0 && that.posY == 0) // top left border
+            // si la bombe n'est sur aucun bord
+            if (that.posX != 0 && that.posX != bomber.board.length-1 && that.posY != 0 && that.posY != bomber.board.length-1)
+            {
+                for(var i = 1; i <= that.porte; i++)
+                {
+                    var fireTop = document.createElement("div");
+                    var textTop = document.createTextNode("|");
+                    fireTop.appendChild(textTop);
+                    document.body.querySelector(".case-" + (that.posX-i) + "-" + that.posY).appendChild(fireTop);
+                    that.explosion.push(fireTop);
+
+                    var fireBottom = document.createElement("div");
+                    var textBottom = document.createTextNode("|");
+
+                    fireBottom.appendChild(textBottom);
+                    document.body.querySelector(".case-" + (that.posX+i) + "-" + that.posY).appendChild(fireBottom);
+                    that.explosion.push(fireBottom);
+                }
+
+                for(var j = 1; j <= that.porte; j++)
+                {
+                    var fireRight = document.createElement("div");
+                    var textRight = document.createTextNode("-");
+                    fireRight.appendChild(textRight);
+                    document.body.querySelector(".case-"+that.posX+"-"+ (that.posY+j)).appendChild(fireRight);
+                    that.explosion.push(fireRight);
+
+                    var fireLeft = document.createElement("div");
+                    var textLeft = document.createTextNode("-");
+                    fireLeft.appendChild(textLeft);
+                    document.body.querySelector(".case-"+that.posX+"-"+ (that.posY-j)).appendChild(fireLeft);
+                    that.explosion.push(fireLeft);
+                }   
+            }
+            
+            // étude de l'explosion de la bombe pour le bord haut
+            else if(that.posX == 0 && that.posY != 0 && that.posY != bomber.board.length-1) // Top border
 			{
-                console.log('gauche');
+                console.log('top');
 				for(var i = 1; i <= that.porte; i++)
 				{
 					var fire = document.createElement("div");
 					var text = document.createTextNode("|");
 					fire.appendChild(text);
-					document.body.querySelector(".case-" + (that.posX+i) + "-0").appendChild(fire);
+					document.body.querySelector(".case-" + (that.posX+i) + "-" + that.posY).appendChild(fire);
 					that.explosion.push(fire);
 				}
-				for(var j = 1; j <= that.porte; j++)
+                for(var j = 1; j <= that.porte; j++)
 				{
-					var fire = document.createElement("div");
-					var text = document.createTextNode("-");
-					fire.appendChild(text);
-					document.body.querySelector(".case-0-"+ (that.posY+j)).appendChild(fire);
-					that.explosion.push(fire);
+					var fireRight = document.createElement("div");
+                    var textRight = document.createTextNode("-");
+                    fireRight.appendChild(textRight);
+                    document.body.querySelector(".case-"+ that.posX +"-"+ (that.posY+j)).appendChild(fireRight);
+                    that.explosion.push(fireRight);
+
+                    var fireLeft = document.createElement("div");
+                    var textLeft = document.createTextNode("-");
+                    fireLeft.appendChild(textLeft);
+                    document.body.querySelector(".case-"+ that.posX +"-"+ (that.posY-j)).appendChild(fireLeft);
+                    that.explosion.push(fireLeft);
 				}
-			} 
+			}
             
-            // étude de l'explosion de la bombe pour le coin haut droite
-            else if(that.posX == 0 && that.posY == bomber.board.length-1) // Top right border
+            //étude de l'explosion de la bombe pour le coin haut gauche
+			else if(that.posX == 0 && that.posY == 0) // top left border
 			{
-                console.log('droit');
 				for(var i = 1; i <= that.porte; i++)
 				{
 					var fire = document.createElement("div");
@@ -175,21 +215,20 @@ var bombe = function(posX, posY, type)
 					var fire = document.createElement("div");
 					var text = document.createTextNode("-");
 					fire.appendChild(text);
-					document.body.querySelector(".case-0-"+ (that.posY-j)).appendChild(fire);
+					document.body.querySelector(".case-" + that.posX + "-"+ (that.posY+j)).appendChild(fire);
 					that.explosion.push(fire);
 				}
-			}
+			} 
             
-            // étude de l'explosion de la bombe pour le coin bas gauche
-            else if(that.posX == bomber.board.length-1 && that.posY == 0) // Bottom right border
+            // étude de l'explosion de la bombe pour le coin haut droite
+            else if(that.posX == 0 && that.posY == bomber.board.length-1) // Top right border
 			{
-                console.log('bas droite');
 				for(var i = 1; i <= that.porte; i++)
 				{
 					var fire = document.createElement("div");
 					var text = document.createTextNode("|");
 					fire.appendChild(text);
-					document.body.querySelector(".case-" + (that.posX-i) + "-" + that.posY).appendChild(fire);
+					document.body.querySelector(".case-" + (that.posX+i) + "-" + that.posY).appendChild(fire);
 					that.explosion.push(fire);
 				}
 				for(var j = 1; j <= that.porte; j++)
@@ -197,7 +236,36 @@ var bombe = function(posX, posY, type)
 					var fire = document.createElement("div");
 					var text = document.createTextNode("-");
 					fire.appendChild(text);
-					document.body.querySelector(".case-9-"+ (that.posY+j)).appendChild(fire);
+					document.body.querySelector(".case-" + that.posX + "-"+ (that.posY-j)).appendChild(fire);
+					that.explosion.push(fire);
+				}
+			}
+            
+            // étude de l'explosion de la bombe pour le bord droite
+            else if(that.posY == bomber.board.length-1 && that.posX != 0 && that.posX != bomber.board.length-1) // Right border
+			{
+				for(var i = 1; i <= that.porte; i++)
+				{
+					var fireTop = document.createElement("div");
+                    var textTop = document.createTextNode("|");
+                    fireTop.appendChild(textTop);
+                    document.body.querySelector(".case-" + (that.posX-i) + "-" + that.posY).appendChild(fireTop);
+                    that.explosion.push(fireTop);
+
+                    var fireBottom = document.createElement("div");
+                    var textBottom = document.createTextNode("|");
+
+                    fireBottom.appendChild(textBottom);
+                    document.body.querySelector(".case-" + (that.posX+i) + "-" + that.posY).appendChild(fireBottom);
+                    that.explosion.push(fireBottom);
+				}
+                
+                for(var j = 1; j <= that.porte; j++)
+				{
+					var fire = document.createElement("div");
+					var text = document.createTextNode("-");
+					fire.appendChild(text);
+					document.body.querySelector(".case-" + that.posX + "-"+ (that.posY-j)).appendChild(fire);
 					that.explosion.push(fire);
 				}
 			}
@@ -219,7 +287,86 @@ var bombe = function(posX, posY, type)
 					var fire = document.createElement("div");
 					var text = document.createTextNode("-");
 					fire.appendChild(text);
-					document.body.querySelector(".case-9-"+ (that.posY-j)).appendChild(fire);
+					document.body.querySelector(".case-" + that.posX + "-"+ (that.posY-j)).appendChild(fire);
+					that.explosion.push(fire);
+				}
+			}
+            
+            // étude de l'explosion de la bombe pour le coin bas gauche
+            else if(that.posX == bomber.board.length-1 && that.posY == 0) // Bottom right border
+			{
+                console.log('bas droite');
+				for(var i = 1; i <= that.porte; i++)
+				{
+					var fire = document.createElement("div");
+					var text = document.createTextNode("|");
+					fire.appendChild(text);
+					document.body.querySelector(".case-" + (that.posX-i) + "-" + that.posY).appendChild(fire);
+					that.explosion.push(fire);
+				}
+				for(var j = 1; j <= that.porte; j++)
+				{
+					var fire = document.createElement("div");
+					var text = document.createTextNode("-");
+					fire.appendChild(text);
+					document.body.querySelector(".case-" + that.posX + "-"+ (that.posY+j)).appendChild(fire);
+					that.explosion.push(fire);
+				}
+			}
+            
+            // étude de l'explosion de la bombe pour le bord haut
+            else if(that.posX == bomber.board.length-1) // Bottom border
+			{
+                console.log('top');
+				for(var i = 1; i <= that.porte; i++)
+				{
+					var fire = document.createElement("div");
+					var text = document.createTextNode("|");
+					fire.appendChild(text);
+					document.body.querySelector(".case-" + (that.posX-i) + "-" + that.posY).appendChild(fire);
+					that.explosion.push(fire);
+				}
+                for(var j = 1; j <= that.porte; j++)
+				{
+					var fireRight = document.createElement("div");
+                    var textRight = document.createTextNode("-");
+                    fireRight.appendChild(textRight);
+                    document.body.querySelector(".case-"+that.posX+"-"+ (that.posY+j)).appendChild(fireRight);
+                    that.explosion.push(fireRight);
+
+                    var fireLeft = document.createElement("div");
+                    var textLeft = document.createTextNode("-");
+                    fireLeft.appendChild(textLeft);
+                    document.body.querySelector(".case-"+that.posX+"-"+ (that.posY-j)).appendChild(fireLeft);
+                    that.explosion.push(fireLeft);
+				}
+			}
+            
+            // étude de l'explosion de la bombe pour le bord droite
+            else if(that.posY == 0) // Right border
+			{
+				for(var i = 1; i <= that.porte; i++)
+				{
+					var fireTop = document.createElement("div");
+                    var textTop = document.createTextNode("|");
+                    fireTop.appendChild(textTop);
+                    document.body.querySelector(".case-" + (that.posX-i) + "-" + that.posY).appendChild(fireTop);
+                    that.explosion.push(fireTop);
+
+                    var fireBottom = document.createElement("div");
+                    var textBottom = document.createTextNode("|");
+
+                    fireBottom.appendChild(textBottom);
+                    document.body.querySelector(".case-" + (that.posX+i) + "-" + that.posY).appendChild(fireBottom);
+                    that.explosion.push(fireBottom);
+				}
+                
+                for(var j = 1; j <= that.porte; j++)
+				{
+					var fire = document.createElement("div");
+					var text = document.createTextNode("-");
+					fire.appendChild(text);
+					document.body.querySelector(".case-" + that.posX + "-"+ (that.posY+j)).appendChild(fire);
 					that.explosion.push(fire);
 				}
 			}
