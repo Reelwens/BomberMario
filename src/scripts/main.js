@@ -1,9 +1,10 @@
-var bomber = {};
-bomber.board = new Array();
-bomber.player = {};
-bomber.game = {};
-bomber.bombes = [];
+var bomber = {}; //object
+bomber.board = new Array(); //valeur de chaque case
+bomber.player = {}; //joueur
+bomber.game = {}; // grille
+bomber.bombes = []; //bombes
 
+// insertion des valeurs 0 dans le tableau (grille)
 for(var i = 0; i < 10; i++)
 {
 	bomber.board[i] = new Array();
@@ -15,6 +16,7 @@ for(var i = 0; i < 10; i++)
 
 console.log(bomber.board);
 
+//création de la grille de jeu
 function display_array()
 {
 	var tab = document.createElement("table");
@@ -35,6 +37,7 @@ function display_array()
 
 display_array();	
 
+//création de la classe player
 var player = function()
 {
 	this.posX = 3;
@@ -42,8 +45,9 @@ var player = function()
 	this.bombe_type = 1;
 	this.speed = 100;
 	this.personnage = {};
-	this.cross = [122, 115, 113, 100]; //z, s, q, d
+	this.cross = [122, 115, 113, 100]; //z, s, q, d (permet le déplacement du perso)
 
+    //création du perso et position sur la grille
 	this.display = function()
 	{
 		this.personnage = document.createElement("p");
@@ -53,11 +57,13 @@ var player = function()
 		document.body.querySelector(".case-" + this.posX + "-" + this.posY).appendChild(this.personnage);
 	}
 
+    // supprimer le perso
 	this.remove_player = function()
 	{
 		this.personnage.remove();	
 	}
 
+    // déplacement du perso suivant les touches Z, S, Q, D et pose de bombe avec la touche B
 	this.move = function()
 	{
 		var that = this;
@@ -83,14 +89,18 @@ var player = function()
 			{
 				that.pose_bombe();
 			}
+            //réinitialisation de la position du perso
 			that.remove_player();
 			that.display();
 		});
 	}
 
+    
 	this.pose_bombe = function()
 	{
+        
 		var newBombe = new bombe(this.posX, this.posY, this.bombe_type);
+        // création d'une bombe supplémentaire dans le tableau
 		bomber.bombes.push(newBombe);
 		newBombe.display();
 		newBombe.remove_bombe();
@@ -99,15 +109,17 @@ var player = function()
 	}
 }
 
+// création de la classe bombe
 var bombe = function(posX, posY, type)
 {
 	this.posX = posX;
 	this.posY = posY;
 	this.type = type;
-	this.porte = 2;
+	this.porte = 2; //portée de l'explosion de la bombe
 	this.bombe_dis = {};
 	this.explosion = [];
 
+    //création de la bombe dans le DOM
 	this.display = function()
 	{
 		this.bombe_dis = document.createElement("div");
@@ -116,12 +128,18 @@ var bombe = function(posX, posY, type)
 		document.body.querySelector(".case-" + this.posX + "-" + this.posY).appendChild(this.bombe_dis);
 	}
 
+    // mise en place de l'explosion de la bombe
 	this.remove_bombe = function(){
 		var that = this;
+        
+        // durée de l'explosion et forme de la flamme suivant l'emplacement de la bombe
 		setTimeout(function(){
 			that.bombe_dis.remove();
-			if(that.posX == 0 && that.posY == 0) // top right border
+            
+            //étude de l'explosion de la bombe pour le coin haut gauche
+			if(that.posX == 0 && that.posY == 0) // top left border
 			{
+                console.log('gauche');
 				for(var i = 1; i <= that.porte; i++)
 				{
 					var fire = document.createElement("div");
@@ -138,8 +156,12 @@ var bombe = function(posX, posY, type)
 					document.body.querySelector(".case-0-"+ (that.posY+j)).appendChild(fire);
 					that.explosion.push(fire);
 				}
-			} else if(that.posX == 0 && that.posY == bomber.board.length-1) // Top left border
+			} 
+            
+            // étude de l'explosion de la bombe pour le coin haut droite
+            else if(that.posX == 0 && that.posY == bomber.board.length-1) // Top right border
 			{
+                console.log('droit');
 				for(var i = 1; i <= that.porte; i++)
 				{
 					var fire = document.createElement("div");
@@ -157,7 +179,52 @@ var bombe = function(posX, posY, type)
 					that.explosion.push(fire);
 				}
 			}
-		}, 1000);
+            
+            // étude de l'explosion de la bombe pour le coin bas gauche
+            else if(that.posX == bomber.board.length-1 && that.posY == 0) // Bottom right border
+			{
+                console.log('bas droite');
+				for(var i = 1; i <= that.porte; i++)
+				{
+					var fire = document.createElement("div");
+					var text = document.createTextNode("|");
+					fire.appendChild(text);
+					document.body.querySelector(".case-" + (that.posX-i) + "-" + that.posY).appendChild(fire);
+					that.explosion.push(fire);
+				}
+				for(var j = 1; j <= that.porte; j++)
+				{
+					var fire = document.createElement("div");
+					var text = document.createTextNode("-");
+					fire.appendChild(text);
+					document.body.querySelector(".case-9-"+ (that.posY+j)).appendChild(fire);
+					that.explosion.push(fire);
+				}
+			}
+            
+            // étude de l'explosion de la bombe pour le coin bas droite
+            else if(that.posX == bomber.board.length-1 && that.posY == bomber.board.length-1) // Bottom right border
+			{
+                console.log('bas droite');
+				for(var i = 1; i <= that.porte; i++)
+				{
+					var fire = document.createElement("div");
+					var text = document.createTextNode("|");
+					fire.appendChild(text);
+					document.body.querySelector(".case-" + (that.posX-i) + "-" + that.posY).appendChild(fire);
+					that.explosion.push(fire);
+				}
+				for(var j = 1; j <= that.porte; j++)
+				{
+					var fire = document.createElement("div");
+					var text = document.createTextNode("-");
+					fire.appendChild(text);
+					document.body.querySelector(".case-9-"+ (that.posY-j)).appendChild(fire);
+					that.explosion.push(fire);
+				}
+			}
+            
+		}, 2000);
 	}
 }
 

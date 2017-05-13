@@ -8,8 +8,12 @@ body{
 	clear: both;
 }
 
-table td
-{
+table {
+    margin: auto;
+    margin-top: 30vh;
+}
+
+table td{
 	width: 30px;
 	height: 30px;
 	background: #C80000;
