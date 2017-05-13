@@ -174,7 +174,6 @@ var bombe = function(posX, posY, type)
             // étude de l'explosion de la bombe pour le bord haut
             else if(that.posX == 0 && that.posY != 0 && that.posY != bomber.board.length-1) // Top border
 			{
-                console.log('top');
 				for(var i = 1; i <= that.porte; i++)
 				{
 					var fire = document.createElement("div");
@@ -183,6 +182,7 @@ var bombe = function(posX, posY, type)
 					document.body.querySelector(".case-" + (that.posX+i) + "-" + that.posY).appendChild(fire);
 					that.explosion.push(fire);
 				}
+                
                 for(var j = 1; j <= that.porte; j++)
 				{
 					var fireRight = document.createElement("div");
@@ -210,6 +210,7 @@ var bombe = function(posX, posY, type)
 					document.body.querySelector(".case-" + (that.posX+i) + "-" + that.posY).appendChild(fire);
 					that.explosion.push(fire);
 				}
+                
 				for(var j = 1; j <= that.porte; j++)
 				{
 					var fire = document.createElement("div");
@@ -231,6 +232,7 @@ var bombe = function(posX, posY, type)
 					document.body.querySelector(".case-" + (that.posX+i) + "-" + that.posY).appendChild(fire);
 					that.explosion.push(fire);
 				}
+                
 				for(var j = 1; j <= that.porte; j++)
 				{
 					var fire = document.createElement("div");
@@ -273,7 +275,6 @@ var bombe = function(posX, posY, type)
             // étude de l'explosion de la bombe pour le coin bas droite
             else if(that.posX == bomber.board.length-1 && that.posY == bomber.board.length-1) // Bottom right border
 			{
-                console.log('bas droite');
 				for(var i = 1; i <= that.porte; i++)
 				{
 					var fire = document.createElement("div");
@@ -282,6 +283,7 @@ var bombe = function(posX, posY, type)
 					document.body.querySelector(".case-" + (that.posX-i) + "-" + that.posY).appendChild(fire);
 					that.explosion.push(fire);
 				}
+                
 				for(var j = 1; j <= that.porte; j++)
 				{
 					var fire = document.createElement("div");
@@ -295,7 +297,6 @@ var bombe = function(posX, posY, type)
             // étude de l'explosion de la bombe pour le coin bas gauche
             else if(that.posX == bomber.board.length-1 && that.posY == 0) // Bottom right border
 			{
-                console.log('bas droite');
 				for(var i = 1; i <= that.porte; i++)
 				{
 					var fire = document.createElement("div");
@@ -304,6 +305,7 @@ var bombe = function(posX, posY, type)
 					document.body.querySelector(".case-" + (that.posX-i) + "-" + that.posY).appendChild(fire);
 					that.explosion.push(fire);
 				}
+                
 				for(var j = 1; j <= that.porte; j++)
 				{
 					var fire = document.createElement("div");
@@ -317,7 +319,6 @@ var bombe = function(posX, posY, type)
             // étude de l'explosion de la bombe pour le bord haut
             else if(that.posX == bomber.board.length-1) // Bottom border
 			{
-                console.log('top');
 				for(var i = 1; i <= that.porte; i++)
 				{
 					var fire = document.createElement("div");
@@ -326,6 +327,7 @@ var bombe = function(posX, posY, type)
 					document.body.querySelector(".case-" + (that.posX-i) + "-" + that.posY).appendChild(fire);
 					that.explosion.push(fire);
 				}
+                
                 for(var j = 1; j <= that.porte; j++)
 				{
 					var fireRight = document.createElement("div");
