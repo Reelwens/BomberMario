@@ -88,8 +88,8 @@ gulp.task( 'js', function()
 // Watch task
 gulp.task( 'watch', function()
 {
-    gulp.watch( './src/scss/**/**', [ 'css' ] );
-    gulp.watch( './src/js/**/**', [ 'js' ] );
+    gulp.watch( './src/style/**/**', [ 'css' ] );
+    gulp.watch( './src/scripts/**/**', [ 'js' ] );
     gulp.watch( './src/**/*.html', [ 'html' ] );
     gulp.watch( './src/img/**/**', [ 'img' ] );
 } );
