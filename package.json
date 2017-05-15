@@ -1,0 +1,29 @@
+{
+  "name": "bombermario",
+  "version": "1.0.0",
+  "description": "#### Incarnez Mario et défiez vos amis dans un Bomberman unique en son genre.",
+  "main": "bombes.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Reelwens/BomberMario.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Reelwens/BomberMario/issues"
+  },
+  "homepage": "https://github.com/Reelwens/BomberMario#readme",
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^4.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-cssnano": "^2.1.2",
+    "gulp-imagemin": "^3.2.0",
+    "gulp-plumber": "^1.1.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^2.1.2"
+  }
+}
