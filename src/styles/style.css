@@ -22,8 +22,9 @@ table
 
 table td
 {
-	width: 30px;
-	height: 30px;
+	width: 32px;
+	height: 32px;
+	position: relative;
 	text-align: center;
 	vertical-align: middle;
 }
@@ -54,4 +55,28 @@ table .case-2
 table .case-3
 {
 	background: url(../img/block_3.png);
+}
+
+/************************************
+
+		$-Player
+
+*************************************/
+.player
+{
+	position: absolute;
+	top: 10px;
+	left: 10px;
+}
+
+/************************************
+
+		$-Bomb
+
+*************************************/
+.bomb
+{
+	position: absolute;
+	top: 10px;
+	left: 10px;
 }

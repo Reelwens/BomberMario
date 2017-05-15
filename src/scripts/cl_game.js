@@ -6,7 +6,7 @@ bomber.map = function()
 {
 	this.cell_height = 10;
 	this.cell_width = 10;
-	this.length_array = 23;
+	this.length_array = 17;
 	this.elem_array = {};
 	this.game = new Array(this.length_array);
 	this.types = [0, 1, 2, 3];
@@ -42,9 +42,9 @@ bomber.map = function()
 				if(this.game[i][j] == 1)
 				{
 					var cell_type = get_random(0, 2);
-					tab += "<td class='case-" + this.game[i][j] + " type-" + cell_type + "'></td>";
+					tab += "<td class='case-" + this.game[i][j] + " type-" + cell_type + " cel-" + i + "-" + j + "'></td>";
 				}
-				else tab += "<td class='case-" + this.game[i][j] + "'></td>";
+				else tab += "<td class='case-" + this.game[i][j] + " cel-" + i + "-" + j + "'></td>";
 			}
 			tab += "</tr>";
 		}
@@ -53,9 +53,3 @@ bomber.map = function()
 	}
 
 }
-
-var new_map = new bomber.map();
-new_map.initiate_game();
-new_map.create_game();
-
-console.log(new_map.game);

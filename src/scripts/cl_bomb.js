@@ -2,7 +2,7 @@
 
 
 
-var bombe = function(posX, posY, type)
+bomber.bombe = function(posX, posY, type)
 {
 	this.posX = posX;
 	this.posY = posY;
@@ -18,19 +18,19 @@ var bombe = function(posX, posY, type)
 	{ // timeout  de la bombe à retardement en milisecondes
 		// reach de l'explosion en nb de cases
 		// power de l'explosion en nb points de vie enlevés
-		case 1 : this.timeout = 10 000;
+		case 1 : this.timeout = 10000;
 		 				 this.reach = 1;
 						 this.power = 2;
 						 break;
-		case 2 : this.timeout = 8 000;
+		case 2 : this.timeout = 8000;
 						 this.reach = 3;
 						 this.power = 3;
 						 break;
-		case 3 : this.timeout = 6 000;
+		case 3 : this.timeout = 6000;
 					 	 this.reach = 6;
 						 this.power = 4;
 						 break;
-		default: this.timeout = 10 000;
+		default: this.timeout = 10000;
 						 this.reach = 1;
 						 this.power = 1;
 						 break;
@@ -41,9 +41,10 @@ var bombe = function(posX, posY, type)
 	this.display = function()
 	{
 		this.bombe_dis = document.createElement("div");
+		this.bombe_dis.classList.add("bomb")
 		var text = document.createTextNode("[B]");
 		this.bombe_dis.appendChild(text);
-		document.body.querySelector(".case-" + this.posX + "-" + this.posY).appendChild(this.bombe_dis);
+		document.body.querySelector(".cel-" + this.posX + "-" + this.posY).appendChild(this.bombe_dis);
 	}
 
     // mise en place de l'explosion de la bombe
