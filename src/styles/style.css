@@ -8,15 +8,50 @@ body{
 	clear: both;
 }
 
-table {
-    margin: auto;
-    margin-top: 30vh;
+
+/************************************
+
+		$-Board
+
+*************************************/
+
+table
+{
+	border-collapse: collapse;
 }
 
-table td{
+table td
+{
 	width: 30px;
 	height: 30px;
-	background: #C80000;
 	text-align: center;
 	vertical-align: middle;
+}
+
+/*For walkable case*/
+table .case-1.type-0
+{
+	background: url(../img/block_1_0.png);
+}
+
+table .case-1.type-1
+{
+	background: url(../img/block_1_1.png);
+}
+
+table .case-1.type-2
+{
+	background: url(../img/block_1_2.png);
+}
+
+/*For breakable case*/
+table .case-2
+{
+	background: url(../img/block_2.png);
+}
+
+/*For unbreakable case*/
+table .case-3
+{
+	background: url(../img/block_3.png);
 }
