@@ -65,8 +65,13 @@ table .case-3
 .player
 {
 	position: absolute;
-	top: 10px;
-	left: 10px;
+	height: 32px;
+	width: 32px;
+	top: 0px;
+	left: 0px;
+	background-image: url(../img/mario.png);
+	background-position: 0px 0px;
+	z-index: 1;
 }
 
 /************************************
@@ -75,6 +80,18 @@ table .case-3
 
 *************************************/
 .bomb
+{
+	position: absolute;
+	top: 10px;
+	left: 10px;
+}
+
+/************************************
+
+		$-Fire
+
+*************************************/
+.fire
 {
 	position: absolute;
 	top: 10px;

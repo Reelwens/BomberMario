@@ -5,8 +5,8 @@ bomber.player = function()
 {
 	this.posX = 1;
 	this.posY = 1;
-	this.bombe_type = 1;
-	this.speed = 100;
+	this.bombe_reach = 3;
+//	this.speed = 100;
 	this.personnage = {};
 	this.dirrection = 0;
 	this.cross = [122, 115, 113, 100, 98]; //z, s, q, d (permet le déplacement du perso)
@@ -16,8 +16,8 @@ bomber.player = function()
 	{
 		this.personnage = document.createElement("div");
 		this.personnage.classList.add("player");
-		var text = document.createTextNode("8");
-		this.personnage.appendChild(text);
+//		var text = document.createTextNode("8");
+//		this.personnage.appendChild(text);
 		document.body.querySelector(".cel-" + this.posX + "-" + this.posY).appendChild(this.personnage);
 	}
 
@@ -52,10 +52,8 @@ bomber.player = function()
 		}
 		else if(this.dirrection == 2) // go Left
 		{
-			console.log("posY - 1= " + parseInt(this.posY-1));
 			if(parseInt(this.posY-1) != 0)
 			{
-				console.log("value = " + new_map.game[parseInt(this.posX)][parseInt(this.posY-1)]);
 				if(new_map.game[ parseInt(this.posX)][ parseInt(this.posY-1)] == 1)
 				{
 					this.posY--;
@@ -118,8 +116,7 @@ bomber.player = function()
 	        // création d'une bombe supplémentaire dans le tableau
 			bomber.all_bombs.push(newBombe);
 			newBombe.display();
-//			newBombe.remove_bombe();
+			newBombe.remove_bombe();
 			console.log(bomber.all_bombs);
-			console.log(this);
 		}
 }
