@@ -6,10 +6,36 @@ var bombe = function(posX, posY, type)
 {
 	this.posX = posX;
 	this.posY = posY;
-	this.type = type;
-	this.porte = 2; //portée de l'explosion de la bombe
-	this.bombe_dis = {};
-	this.explosion = [];
+	this.type = type; // will set the levels of power, time, reach
+	this.reach = 0; // portée de l'explosion de la bombe en nb de cases
+	this.timeout = 0; // time before explosion
+	this.power = 0; // life points cost for players when they explode
+	this.bombe_dis = {}; // displayed representation of the bomb
+	this.explosion = []; // gestion de l'explosion
+
+	// setting of the bomb properties according to bomb type
+	switch (type)
+	{ // timeout  de la bombe à retardement en milisecondes
+		// reach de l'explosion en nb de cases
+		// power de l'explosion en nb points de vie enlevés
+		case 1 : this.timeout = 10 000;
+		 				 this.reach = 1;
+						 this.power = 2;
+						 break;
+		case 2 : this.timeout = 8 000;
+						 this.reach = 3;
+						 this.power = 3;
+						 break;
+		case 3 : this.timeout = 6 000;
+					 	 this.reach = 6;
+						 this.power = 4;
+						 break;
+		default: this.timeout = 10 000;
+						 this.reach = 1;
+						 this.power = 1;
+						 break;
+	}
+
 
     //création de la bombe dans le DOM
 	this.display = function()
@@ -31,7 +57,7 @@ var bombe = function(posX, posY, type)
             // si la bombe n'est sur aucun bord
             if (that.posX != 0 && that.posX != bomber.board.length-1 && that.posY != 0 && that.posY != bomber.board.length-1)
             {
-                for(var i = 1; i <= that.porte; i++)
+                for(var i = 1; i <= that.reach; i++)
                 {
                     var fireTop = document.createElement("div");
                     var textTop = document.createTextNode("|");
@@ -47,7 +73,7 @@ var bombe = function(posX, posY, type)
                     that.explosion.push(fireBottom);
                 }
 
-                for(var j = 1; j <= that.porte; j++)
+                for(var j = 1; j <= that.reach; j++)
                 {
                     var fireRight = document.createElement("div");
                     var textRight = document.createTextNode("-");
@@ -66,7 +92,7 @@ var bombe = function(posX, posY, type)
             // étude de l'explosion de la bombe pour le bord haut
             else if(that.posX == 0 && that.posY != 0 && that.posY != bomber.board.length-1) // Top border
 			{
-				for(var i = 1; i <= that.porte; i++)
+				for(var i = 1; i <= that.reach; i++)
 				{
 					var fire = document.createElement("div");
 					var text = document.createTextNode("|");
@@ -75,7 +101,7 @@ var bombe = function(posX, posY, type)
 					that.explosion.push(fire);
 				}
 
-                for(var j = 1; j <= that.porte; j++)
+                for(var j = 1; j <= that.reach; j++)
 				{
 					var fireRight = document.createElement("div");
                     var textRight = document.createTextNode("-");
@@ -94,7 +120,7 @@ var bombe = function(posX, posY, type)
             //étude de l'explosion de la bombe pour le coin haut gauche
 			else if(that.posX == 0 && that.posY == 0) // top left border
 			{
-				for(var i = 1; i <= that.porte; i++)
+				for(var i = 1; i <= that.reach; i++)
 				{
 					var fire = document.createElement("div");
 					var text = document.createTextNode("|");
@@ -103,7 +129,7 @@ var bombe = function(posX, posY, type)
 					that.explosion.push(fire);
 				}
 
-				for(var j = 1; j <= that.porte; j++)
+				for(var j = 1; j <= that.reach; j++)
 				{
 					var fire = document.createElement("div");
 					var text = document.createTextNode("-");
@@ -116,7 +142,7 @@ var bombe = function(posX, posY, type)
             // étude de l'explosion de la bombe pour le coin haut droite
             else if(that.posX == 0 && that.posY == bomber.board.length-1) // Top right border
 			{
-				for(var i = 1; i <= that.porte; i++)
+				for(var i = 1; i <= that.reach; i++)
 				{
 					var fire = document.createElement("div");
 					var text = document.createTextNode("|");
@@ -125,7 +151,7 @@ var bombe = function(posX, posY, type)
 					that.explosion.push(fire);
 				}
 
-				for(var j = 1; j <= that.porte; j++)
+				for(var j = 1; j <= that.reach; j++)
 				{
 					var fire = document.createElement("div");
 					var text = document.createTextNode("-");
@@ -138,7 +164,7 @@ var bombe = function(posX, posY, type)
             // étude de l'explosion de la bombe pour le bord droite
             else if(that.posY == bomber.board.length-1 && that.posX != 0 && that.posX != bomber.board.length-1) // Right border
 			{
-				for(var i = 1; i <= that.porte; i++)
+				for(var i = 1; i <= that.reach; i++)
 				{
 					var fireTop = document.createElement("div");
                     var textTop = document.createTextNode("|");
@@ -154,7 +180,7 @@ var bombe = function(posX, posY, type)
                     that.explosion.push(fireBottom);
 				}
 
-                for(var j = 1; j <= that.porte; j++)
+                for(var j = 1; j <= that.reach; j++)
 				{
 					var fire = document.createElement("div");
 					var text = document.createTextNode("-");
@@ -167,7 +193,7 @@ var bombe = function(posX, posY, type)
             // étude de l'explosion de la bombe pour le coin bas droite
             else if(that.posX == bomber.board.length-1 && that.posY == bomber.board.length-1) // Bottom right border
 			{
-				for(var i = 1; i <= that.porte; i++)
+				for(var i = 1; i <= that.reach; i++)
 				{
 					var fire = document.createElement("div");
 					var text = document.createTextNode("|");
@@ -176,7 +202,7 @@ var bombe = function(posX, posY, type)
 					that.explosion.push(fire);
 				}
 
-				for(var j = 1; j <= that.porte; j++)
+				for(var j = 1; j <= that.reach; j++)
 				{
 					var fire = document.createElement("div");
 					var text = document.createTextNode("-");
@@ -189,7 +215,7 @@ var bombe = function(posX, posY, type)
             // étude de l'explosion de la bombe pour le coin bas gauche
             else if(that.posX == bomber.board.length-1 && that.posY == 0) // Bottom right border
 			{
-				for(var i = 1; i <= that.porte; i++)
+				for(var i = 1; i <= that.reach; i++)
 				{
 					var fire = document.createElement("div");
 					var text = document.createTextNode("|");
@@ -198,7 +224,7 @@ var bombe = function(posX, posY, type)
 					that.explosion.push(fire);
 				}
 
-				for(var j = 1; j <= that.porte; j++)
+				for(var j = 1; j <= that.reach; j++)
 				{
 					var fire = document.createElement("div");
 					var text = document.createTextNode("-");
@@ -211,7 +237,7 @@ var bombe = function(posX, posY, type)
             // étude de l'explosion de la bombe pour le bord haut
             else if(that.posX == bomber.board.length-1) // Bottom border
 			{
-				for(var i = 1; i <= that.porte; i++)
+				for(var i = 1; i <= that.reach; i++)
 				{
 					var fire = document.createElement("div");
 					var text = document.createTextNode("|");
@@ -220,7 +246,7 @@ var bombe = function(posX, posY, type)
 					that.explosion.push(fire);
 				}
 
-                for(var j = 1; j <= that.porte; j++)
+                for(var j = 1; j <= that.reach; j++)
 				{
 					var fireRight = document.createElement("div");
                     var textRight = document.createTextNode("-");
@@ -239,7 +265,7 @@ var bombe = function(posX, posY, type)
             // étude de l'explosion de la bombe pour le bord droite
             else if(that.posY == 0) // Right border
 			{
-				for(var i = 1; i <= that.porte; i++)
+				for(var i = 1; i <= that.reach; i++)
 				{
 					var fireTop = document.createElement("div");
                     var textTop = document.createTextNode("|");
@@ -255,7 +281,7 @@ var bombe = function(posX, posY, type)
                     that.explosion.push(fireBottom);
 				}
 
-                for(var j = 1; j <= that.porte; j++)
+                for(var j = 1; j <= that.reach; j++)
 				{
 					var fire = document.createElement("div");
 					var text = document.createTextNode("-");
