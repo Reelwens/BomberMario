@@ -11,23 +11,24 @@ bomber.fire = function(posX, posY, direction, remain)
 		//		console.log(" x = " + this.posX + " et y = " + this.posY + " donc value = " + new_map.game[this.posX][this.posY]);
 		if(new_map.game[this.posX][this.posY] == 1)
 		{
-			if((new_player.posX == this.posX) && (new_player.posY == this.posY))
+			for(let i = 0; i < new_player.length; i++)
 			{
-				alert("game over");
+				if((new_player[i].posX == this.posX) && (new_player[i].posY == this.posY))
+				{
+					new_player[i].remove_player();
+				}
 			}
-			else
-			{
-				this.fire_dis = document.createElement("div");
-				this.fire_dis.classList.add("fire")
-				var text = document.createTextNode("*");
-				this.fire_dis.appendChild(text);
-				document.body.querySelector(".cel-" + this.posX + "-" + this.posY).appendChild(this.fire_dis);
-			}
+			this.fire_dis = document.createElement("div");
+			this.fire_dis.classList.add("fire")
+			var text = document.createTextNode("*");
+			this.fire_dis.appendChild(text);
+			document.body.querySelector(".cel-" + this.posX + "-" + this.posY).appendChild(this.fire_dis);
+
 
 			var that = this;
-			setTimeout(function() {
+			that.verify();
+			setTimeout(function(){
 				that.fire_remove();
-				that.verify();
 			}, 500);
 		}
 		else if(new_map.game[parseInt(this.posX)][parseInt(this.posY)] == 2)
@@ -49,31 +50,32 @@ bomber.fire = function(posX, posY, direction, remain)
 
 	this.verify = function()
 	{
-		console.log("ok");
+		//		console.log("dir = " + direction);
 		if(this.remain > 0)
 		{
-			console.log(remain);
+			//			console.log(remain);
 			this.remain--;
 			if(this.direction == 0)
 			{
-				var start_fire = new bomber.fire(posX-1, posY, 0, this.remain);
+				var start_fire = new bomber.fire(this.posX-1, this.posY, 0, this.remain);
 				start_fire.display();
 			}
 			else if(this.direction == 1)
 			{
-				var start_fire = new bomber.fire(posX+1, posY, 1, this.remain);
+				var start_fire = new bomber.fire(this.posX+1, this.posY, 1, this.remain);
 				start_fire.display();
 			}
 			else if(this.direction == 2)
 			{
-				var start_fire = new bomber.fire(posX, posY-1, 2, this.remain);
+				var start_fire = new bomber.fire(this.posX, this.posY-1, 2, this.remain);
 				start_fire.display();
 			}
 			else if(this.direction == 3)
 			{
-				var start_fire = new bomber.fire(posX, posY+1, 3, this.remain);
+				var start_fire = new bomber.fire(this.posX, this.posY+1, 3, this.remain);
 				start_fire.display();
 			}
 		}
+		console.log("x = " + this.posX + " | y = " + this.posY);	
 	}
 }

@@ -1,9 +1,15 @@
-var new_map = new bomber.map();
-new_map.initiate_game();
-new_map.create_game();
+var start_button = document.querySelector(".start");
+var new_map;
+var new_player = [];
 
-var new_player = new bomber.player();
-new_player.display();
-new_player.move();
+start_button.addEventListener("click", function(e){
+	e.preventDefault();
 
-bomber.all_bombs = new Array();
+	new_map = new bomber.map();
+	new_map.initiate_game();
+	new_map.create_game();
+
+	new_player[0] = new bomber.player(1, 1);
+	new_player[0].display();
+	new_player[0].move();
+});

@@ -1,12 +1,12 @@
 // classe player
 
 
-bomber.player = function()
+bomber.player = function(posX=1, posY=1)
 {
-	this.posX = 1;
-	this.posY = 1;
+	this.posX = posX;
+	this.posY = posY;
 	this.bombe_reach = 3;
-//	this.speed = 100;
+	this.bombe_timer = 3;
 	this.personnage = {};
 	this.dirrection = 0;
 	this.cross = [122, 115, 113, 100, 98]; //z, s, q, d (permet le déplacement du perso)
@@ -16,8 +16,8 @@ bomber.player = function()
 	{
 		this.personnage = document.createElement("div");
 		this.personnage.classList.add("player");
-//		var text = document.createTextNode("8");
-//		this.personnage.appendChild(text);
+		//		var text = document.createTextNode("8");
+		//		this.personnage.appendChild(text);
 		document.body.querySelector(".cel-" + this.posX + "-" + this.posY).appendChild(this.personnage);
 	}
 
@@ -32,9 +32,9 @@ bomber.player = function()
 	{
 		if(this.dirrection == 0) // go Top
 		{
-			if(parseInt(this.posX-1) != 0)
+			if(this.posX-1 != 0)
 			{
-				if(new_map.game[ parseInt(this.posX-1)][ parseInt(this.posY)] == 1)
+				if(new_map.game[this.posX-1][this.posY] == 1)
 				{
 					this.posX--;
 				}
@@ -42,9 +42,9 @@ bomber.player = function()
 		}
 		else if(this.dirrection == 1) // go Bottom
 		{
-			if(parseInt(this.posX+1) != new_map.length_array-1)
+			if(this.posX+1 != new_map.length_array-1)
 			{
-				if(new_map.game[ parseInt(this.posX+1)][ parseInt(this.posY)] == 1)
+				if(new_map.game[this.posX+1][this.posY] == 1)
 				{
 					this.posX++;
 				}
@@ -52,9 +52,9 @@ bomber.player = function()
 		}
 		else if(this.dirrection == 2) // go Left
 		{
-			if(parseInt(this.posY-1) != 0)
+			if(this.posY-1 != 0)
 			{
-				if(new_map.game[ parseInt(this.posX)][ parseInt(this.posY-1)] == 1)
+				if(new_map.game[this.posX][this.posY-1] == 1)
 				{
 					this.posY--;
 				}
@@ -62,9 +62,9 @@ bomber.player = function()
 		}
 		else if(this.dirrection == 3) // go Right
 		{
-			if(parseInt(this.posY+1) != new_map.length_array-1)
+			if(this.posY+1 != new_map.length_array-1)
 			{
-				if(new_map.game[ parseInt(this.posX)][ parseInt(this.posY+1)] == 1)
+				if(new_map.game[this.posX][this.posY+1] == 1)
 				{
 					this.posY++;
 				}
@@ -109,14 +109,11 @@ bomber.player = function()
 	}
 
 	//
-		this.pose_bombe = function()
-		{
-	
-			var newBombe = new bomber.bombe(this.posX, this.posY, this.bombe_type);
-	        // création d'une bombe supplémentaire dans le tableau
-			bomber.all_bombs.push(newBombe);
-			newBombe.display();
-			newBombe.remove_bombe();
-			console.log(bomber.all_bombs);
-		}
+	this.pose_bombe = function()
+	{
+
+		var newBombe = new bomber.bombe(this.posX, this.posY, this.bombe_reach, 1, this.bombe_timer); //posX, posY, reach, power, timeOut
+		newBombe.display();
+		newBombe.remove_bombe();
+	}
 }
