@@ -2,7 +2,7 @@
 
 
 
-bomber.bombe = function(posX, posY, reach=1, power=1, timeOut=3)
+bomber.bombe = function(posX, posY, reach, power, timeOut)
 {
 	this.posX = posX;
 	this.posY = posY;
@@ -34,10 +34,10 @@ bomber.bombe = function(posX, posY, reach=1, power=1, timeOut=3)
 
 	this.explosion = function()
 	{
-		var start_fire_1 = new bomber.fire(posX-1, posY, 0, reach); // top
-		var start_fire_2 = new bomber.fire(posX+1, posY, 1, reach); //bottom
-		var start_fire_3 = new bomber.fire(posX, posY-1, 2, reach); //left	
-		var start_fire_4 = new bomber.fire(posX, posY+1, 3, reach); // right
+		var start_fire_1 = new bomber.fire(this.posX-1, this.posY, 0, this.reach); // top
+		var start_fire_2 = new bomber.fire(this.posX+1, this.posY, 1, this.reach); //bottom
+		var start_fire_3 = new bomber.fire(this.posX, this.posY-1, 2, this.reach); //left	
+		var start_fire_4 = new bomber.fire(this.posX, this.posY+1, 3, this.reach); // right
 		start_fire_1.display();
 		start_fire_2.display();
 		start_fire_3.display();

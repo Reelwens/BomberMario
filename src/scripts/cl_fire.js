@@ -3,7 +3,7 @@ bomber.fire = function(posX, posY, direction, remain)
 	this.posX = posX;
 	this.posY = posY;
 	this.direction = direction; // direction of fire propagation -> 0 = top; 1 = bot; 2 = left; 3 = right
-	this.remain = remain; // the remaining fire to creat
+	this.remain = remain-1; // the remaining fire to creat
 	this.fire_dis; // displayed representation of the fire
 	this.kill = false; // if it's kill a player set to true
 
@@ -60,7 +60,6 @@ bomber.fire = function(posX, posY, direction, remain)
 		if(this.remain > 0)
 		{
 			//			console.log(remain);
-			this.remain--;
 			if(this.direction == 0)
 			{
 				var start_fire = new bomber.fire(this.posX-1, this.posY, 0, this.remain);

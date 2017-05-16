@@ -11,7 +11,7 @@ bomber.player = function(posX=1, posY=1)
 	this.cross = [122, 115, 113, 100, 98]; //z, s, q, d (permet le déplacement du perso)
 
 	this.bombe_reach = 3;
-	this.bombe_timer = 1;
+	this.bombe_timer = 4;
 	this.bombe_x = 0;
 	this.bombe_y = 0;
 
