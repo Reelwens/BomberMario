@@ -4,12 +4,16 @@ bomber.game_elem = document.querySelector(".game");
 // insertion des valeurs 0 dans le tableau (grille)
 bomber.map = function()
 {
-	this.cell_height = 10;
-	this.cell_width = 10;
 	this.length_array = 17;
-	this.elem_array = {};
-	this.game = new Array(this.length_array);
-	this.types = [0, 1, 2, 3];
+	this.game = new Array(this.length_array); // js array that stock all block type
+	this.types = [0, 1, 2, 3]; // Block type
+	
+	/*
+		Block type :
+		0 and 1 --> Grass block, it's where we can walk
+		2 --> Brick block, it's a block you can destroye with your bomb
+		3 --> Steal block, it's an unbreakable
+	*/
 
 	this.initiate_game = function()
 	{

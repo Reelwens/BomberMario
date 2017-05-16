@@ -5,6 +5,7 @@ bomber.fire = function(posX, posY, direction, remain)
 	this.direction = direction; // direction of fire propagation -> 0 = top; 1 = bot; 2 = left; 3 = right
 	this.remain = remain; // the remaining fire to creat
 	this.fire_dis; // displayed representation of the fire
+	this.kill = false; // if it's kill a player set to true
 
 	this.display = function()
 	{
@@ -16,20 +17,25 @@ bomber.fire = function(posX, posY, direction, remain)
 				if((new_player[i].posX == this.posX) && (new_player[i].posY == this.posY))
 				{
 					new_player[i].remove_player();
+					new_player[i].is_a_live = false;
+					this.kill = true;
+					console.log(new_player);
 				}
 			}
-			this.fire_dis = document.createElement("div");
-			this.fire_dis.classList.add("fire")
-			var text = document.createTextNode("*");
-			this.fire_dis.appendChild(text);
-			document.body.querySelector(".cel-" + this.posX + "-" + this.posY).appendChild(this.fire_dis);
+			if(this.kill != true)
+			{
+				this.fire_dis = document.createElement("div");
+				this.fire_dis.classList.add("fire")
+				var text = document.createTextNode("*");
+				this.fire_dis.appendChild(text);
+				document.body.querySelector(".cel-" + this.posX + "-" + this.posY).appendChild(this.fire_dis);
 
-
-			var that = this;
-			that.verify();
-			setTimeout(function(){
-				that.fire_remove();
-			}, 500);
+				var that = this;
+				that.verify();
+				setTimeout(function(){
+					that.fire_remove();
+				}, 500);
+			}
 		}
 		else if(new_map.game[parseInt(this.posX)][parseInt(this.posY)] == 2)
 		{

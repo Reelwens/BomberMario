@@ -5,11 +5,15 @@ bomber.player = function(posX=1, posY=1)
 {
 	this.posX = posX;
 	this.posY = posY;
-	this.bombe_reach = 3;
-	this.bombe_timer = 3;
+	this.is_a_live = true;
 	this.personnage = {};
 	this.dirrection = 0;
 	this.cross = [122, 115, 113, 100, 98]; //z, s, q, d (permet le déplacement du perso)
+
+	this.bombe_reach = 3;
+	this.bombe_timer = 1;
+	this.bombe_x = 0;
+	this.bombe_y = 0;
 
 	//création du perso et position sur la grille
 	this.display = function()
@@ -36,7 +40,7 @@ bomber.player = function(posX=1, posY=1)
 			{
 				if(new_map.game[this.posX-1][this.posY] == 1)
 				{
-					this.posX--;
+					if((this.posX-1 != this.bombe_x) || (this.posY != this.bombe_y)) this.posX--;
 				}
 			}
 		}
@@ -46,7 +50,7 @@ bomber.player = function(posX=1, posY=1)
 			{
 				if(new_map.game[this.posX+1][this.posY] == 1)
 				{
-					this.posX++;
+					if((this.posX+1 != this.bombe_x) || (this.posY != this.bombe_y)) this.posX++;
 				}
 			}
 		}
@@ -56,7 +60,7 @@ bomber.player = function(posX=1, posY=1)
 			{
 				if(new_map.game[this.posX][this.posY-1] == 1)
 				{
-					this.posY--;
+					if((this.posX != this.bombe_x) || (this.posY-1 != this.bombe_y)) this.posY--;
 				}
 			}
 		}
@@ -66,7 +70,7 @@ bomber.player = function(posX=1, posY=1)
 			{
 				if(new_map.game[this.posX][this.posY+1] == 1)
 				{
-					this.posY++;
+					if((this.posX != this.bombe_x) || (this.posY+1 != this.bombe_y)) this.posY++;
 				}
 			}
 		}
@@ -77,34 +81,37 @@ bomber.player = function(posX=1, posY=1)
 	{
 		var that = this;
 		window.addEventListener("keypress", function(e){
-			pressKey = e.keyCode;
-			if(pressKey == that.cross[0]) //Z
+			if(that.is_a_live)
 			{
-				that.dirrection = 0;
-				that.get_possibility();
+				pressKey = e.keyCode;
+				if(pressKey == that.cross[0]) //Z
+				{
+					that.dirrection = 0;
+					that.get_possibility();
+				}
+				else if(pressKey == that.cross[1]) //S
+				{
+					that.dirrection = 1;
+					that.get_possibility();
+				}
+				else if(pressKey == that.cross[2]) //Q
+				{
+					that.dirrection = 2;
+					that.get_possibility();
+				}
+				else if(pressKey == that.cross[3]) //D
+				{
+					that.dirrection = 3;
+					that.get_possibility();
+				}
+				else if(pressKey == that.cross[4]) //B
+				{
+					that.pose_bombe();
+				}
+				//réinitialisation de la position du perso
+				that.remove_player();
+				that.display();
 			}
-			else if(pressKey == that.cross[1]) //S
-			{
-				that.dirrection = 1;
-				that.get_possibility();
-			}
-			else if(pressKey == that.cross[2]) //Q
-			{
-				that.dirrection = 2;
-				that.get_possibility();
-			}
-			else if(pressKey == that.cross[3]) //D
-			{
-				that.dirrection = 3;
-				that.get_possibility();
-			}
-			else if(pressKey == that.cross[4]) //B
-			{
-				that.pose_bombe();
-			}
-			//réinitialisation de la position du perso
-			that.remove_player();
-			that.display();
 		});
 	}
 
@@ -113,7 +120,15 @@ bomber.player = function(posX=1, posY=1)
 	{
 
 		var newBombe = new bomber.bombe(this.posX, this.posY, this.bombe_reach, 1, this.bombe_timer); //posX, posY, reach, power, timeOut
+		this.bombe_x = this.posX;
+		this.bombe_y = this.posY;
 		newBombe.display();
 		newBombe.remove_bombe();
+		var that = this;
+		setTimeout(function(){
+			that.bombe_x = 0;
+			that.bombe_y = 0;
+			console.log("kaboom");
+		}, this.bombe_timer*1000);
 	}
 }
