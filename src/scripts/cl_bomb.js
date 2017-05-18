@@ -16,8 +16,6 @@ bomber.bombe = function(posX, posY, reach, power, timeOut)
 	{
 		this.bombe_dis = document.createElement("div");
 		this.bombe_dis.classList.add("bomb")
-		var text = document.createTextNode("[B]");
-		this.bombe_dis.appendChild(text);
 		document.body.querySelector(".cel-" + this.posX + "-" + this.posY).appendChild(this.bombe_dis);
 	}
 
@@ -38,9 +36,11 @@ bomber.bombe = function(posX, posY, reach, power, timeOut)
 		var start_fire_2 = new bomber.fire(this.posX+1, this.posY, 1, this.reach); //bottom
 		var start_fire_3 = new bomber.fire(this.posX, this.posY-1, 2, this.reach); //left	
 		var start_fire_4 = new bomber.fire(this.posX, this.posY+1, 3, this.reach); // right
+		var start_fire_5 = new bomber.fire(this.posX, this.posY, 4, this.reach); // middle
 		start_fire_1.display();
 		start_fire_2.display();
 		start_fire_3.display();
 		start_fire_4.display();
+		start_fire_5.display();
 	}
 }

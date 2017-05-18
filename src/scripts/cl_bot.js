@@ -18,8 +18,6 @@ bomber.bot = function()
 	{
 		this.personnage = document.createElement("div");
 		this.personnage.classList.add("player"); //..#############################################
-//		var text = document.createTextNode("8");
-//		this.personnage.appendChild(text);
 		document.body.querySelector(".cel-" + this.posX + "-" + this.posY).appendChild(this.personnage);
 	}
 

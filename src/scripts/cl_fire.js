@@ -17,7 +17,7 @@ bomber.fire = function(posX, posY, direction, remain)
 				if((new_player[i].posX == this.posX) && (new_player[i].posY == this.posY))
 				{
 					new_player[i].remove_player();
-					new_player[i].is_a_live = false;
+					new_player[i].is_alive = false;
 					this.kill = true;
 					console.log(new_player);
 				}
@@ -26,8 +26,6 @@ bomber.fire = function(posX, posY, direction, remain)
 			{
 				this.fire_dis = document.createElement("div");
 				this.fire_dis.classList.add("fire")
-				var text = document.createTextNode("*");
-				this.fire_dis.appendChild(text);
 				document.body.querySelector(".cel-" + this.posX + "-" + this.posY).appendChild(this.fire_dis);
 
 				var that = this;

@@ -1,17 +1,18 @@
 // classe player
 
 
-bomber.player = function(posX=1, posY=1)
+bomber.player = function(id, posX=1, posY=1)
 {
+	this.id = id;
 	this.posX = posX;
 	this.posY = posY;
-	this.is_a_live = true;
+	this.is_alive = true;
 	this.personnage = {};
 	this.dirrection = 0;
 	this.cross = [122, 115, 113, 100, 98]; //z, s, q, d (permet le déplacement du perso)
 
 	this.bombe_reach = 3;
-	this.bombe_timer = 4;
+	this.bombe_timer = 1;
 	this.bombe_x = 0;
 	this.bombe_y = 0;
 
@@ -20,8 +21,6 @@ bomber.player = function(posX=1, posY=1)
 	{
 		this.personnage = document.createElement("div");
 		this.personnage.classList.add("player");
-		//		var text = document.createTextNode("8");
-		//		this.personnage.appendChild(text);
 		document.body.querySelector(".cel-" + this.posX + "-" + this.posY).appendChild(this.personnage);
 	}
 
@@ -81,36 +80,36 @@ bomber.player = function(posX=1, posY=1)
 	{
 		var that = this;
 		window.addEventListener("keypress", function(e){
-			if(that.is_a_live)
+			if(that.is_alive)
 			{
 				pressKey = e.keyCode;
-				if(pressKey == that.cross[0]) //Z
-				{
-					that.dirrection = 0;
-					that.get_possibility();
-				}
-				else if(pressKey == that.cross[1]) //S
-				{
-					that.dirrection = 1;
-					that.get_possibility();
-				}
-				else if(pressKey == that.cross[2]) //Q
-				{
-					that.dirrection = 2;
-					that.get_possibility();
-				}
-				else if(pressKey == that.cross[3]) //D
-				{
-					that.dirrection = 3;
-					that.get_possibility();
-				}
-				else if(pressKey == that.cross[4]) //B
-				{
-					that.pose_bombe();
-				}
-				//réinitialisation de la position du perso
-				that.remove_player();
-				that.display();
+			if(pressKey == that.cross[0]) //Z
+			{
+				that.dirrection = 0;
+				that.get_possibility();
+			}
+			else if(pressKey == that.cross[1]) //S
+			{
+				that.dirrection = 1;
+				that.get_possibility();
+			}
+			else if(pressKey == that.cross[2]) //Q
+			{
+				that.dirrection = 2;
+				that.get_possibility();
+			}
+			else if(pressKey == that.cross[3]) //D
+			{
+				that.dirrection = 3;
+				that.get_possibility();
+			}
+			else if(pressKey == that.cross[4]) //B
+			{
+				that.pose_bombe();
+			}
+			//réinitialisation de la position du perso
+			that.remove_player();
+			that.display();
 			}
 		});
 	}
