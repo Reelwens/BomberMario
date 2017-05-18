@@ -2,8 +2,9 @@
 
 
 
-bomber.bombe = function(posX, posY, reach, power, timeOut)
+bomber.bombe = function(id, posX, posY, reach, power, timeOut)
 {
+	this.id = id;
 	this.posX = posX;
 	this.posY = posY;
 	this.reach = reach; // portée de l'explosion de la bombe en nb de cases
@@ -27,6 +28,11 @@ bomber.bombe = function(posX, posY, reach, power, timeOut)
 		setTimeout(function(){
 			that.bombe_dis.remove();
 			that.explosion();
+
+			for(var i = 0; i < new_bomb.length; i++)
+			{
+				if(that.id == new_bomb[i].id) new_bomb.splice(i, 1);
+			}
 		}, that.timeout);
 	}
 

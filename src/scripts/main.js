@@ -1,6 +1,8 @@
 var start_button = document.querySelector(".start");
 var new_map;
 var new_player = [];
+var new_bomb = [];
+var id = 0;
 
 start_button.addEventListener("click", function(e){
 	e.preventDefault();
@@ -21,4 +23,8 @@ start_button.addEventListener("click", function(e){
 	new_player[0] = new bomber.player(0, 1, 1); 
 	new_player[0].display();
 	new_player[0].move();
+	
+	new_player[1] = new bomber.bot(0, 1, new_map.length_array-2); 
+	new_player[1].display();
+	new_player[1].move();
 });

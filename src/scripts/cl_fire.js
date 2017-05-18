@@ -9,7 +9,6 @@ bomber.fire = function(posX, posY, direction, remain)
 
 	this.display = function()
 	{
-		//		console.log(" x = " + this.posX + " et y = " + this.posY + " donc value = " + new_map.game[this.posX][this.posY]);
 		if(new_map.game[this.posX][this.posY] == 1)
 		{
 			for(let i = 0; i < new_player.length; i++)
@@ -19,7 +18,6 @@ bomber.fire = function(posX, posY, direction, remain)
 					new_player[i].remove_player();
 					new_player[i].is_alive = false;
 					this.kill = true;
-					console.log(new_player);
 				}
 			}
 			if(this.kill != true)
@@ -54,10 +52,8 @@ bomber.fire = function(posX, posY, direction, remain)
 
 	this.verify = function()
 	{
-		//		console.log("dir = " + direction);
 		if(this.remain > 0)
 		{
-			//			console.log(remain);
 			if(this.direction == 0)
 			{
 				var start_fire = new bomber.fire(this.posX-1, this.posY, 0, this.remain);
@@ -79,6 +75,5 @@ bomber.fire = function(posX, posY, direction, remain)
 				start_fire.display();
 			}
 		}
-		console.log("x = " + this.posX + " | y = " + this.posY);	
 	}
 }

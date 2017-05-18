@@ -5,12 +5,12 @@ bomber.bot = function()
 	this.posX = 1;
 	this.posY = new_map.length_array-2;
 	this.bombe_reach = 3;
-//	this.speed = 100;
+	//	this.speed = 100;
 	this.personnage = {};
 	this.dirrection = 0;
 	this.is_alive = true;
 	this.next_dir; // prochaine possibilité
-	this.t = 1000; // propriété réactivité en milisecs : tous les combiens il va bouger, combien il va prendre des risques de s'approcher des bombes
+	this.t = 100; // propriété réactivité en milisecs : tous les combiens il va bouger, combien il va prendre des risques de s'approcher des bombes
 	//this.cross = [122, 115, 113, 100, 98]; //z, s, q, d (déplacer le bot..
 
 	//création du bot et position sur la grille
@@ -34,17 +34,18 @@ bomber.bot = function()
 		var moveM = ''; // move Max, au pire ce sera sur 'stay'
 		var scoreA = 0; // score de la case Actuelle du forEach
 		var cases = [4, 0, 1, 2, 3]; // 4stay – 0top – 1bottom – 2left – 3right
-		moveM = cases.forEach( function(case)
+
+		for(var i = 0; i < cases.length; i++)
 		{
-			this.next_dir = case;
+			this.next_dir = cases[i];
 			scoreA = 0
 			scoreA += this.get_possibility(); // avec un return 0 ou 1
-				// scoreA += isSafe(case) // avec return 0 ou 0.5
-				// 	scoreA += isInteresting(case) // return 0.2 si on se dirige vers un objet ou un adversaire
-				// 	  scoreA += isDirection() // return 0.1 si c'était la direction d'avant, pour éviter les aller retour si possible
-			if (scoreA >= scoreM)
-					moveM = case;
-		});
+			// scoreA += isSafe(case) // avec return 0 ou 0.5
+			// 	scoreA += isInteresting(case) // return 0.2 si on se dirige vers un objet ou un adversaire
+			// 	  scoreA += isDirection() // return 0.1 si c'était la direction d'avant, pour éviter les aller retour si possible
+			if (scoreA >= scoreM)		
+				moveM = cases[i];
+		}
 	}
 
 	// ######## get_posibility à récupérer, faire un return 0/1, pour les this.next_dir
@@ -53,58 +54,102 @@ bomber.bot = function()
 
 	this.live = function()
 	{
-		while (this.isAlive == true)
-		{
-			setTimeOut(this.choose, this.t); // attendre t (propriété réactivité en milisecs) et lancer le test des opportunités de mouvements
-			this.move(); // bouger
-		}
+		var that = this;
+//		this.test();
+		this.move();
+		if(this.is_alive)  window.requestAnimationFrame(that.live);
 	}
 
-	// déplacement du perso suivant les touches Z, S, Q, D et pose de bombe avec la touche B
+	//	déplacement du perso suivant les touches Z, S, Q, D et pose de bombe avec la touche B
 	this.move = function()
 	{
+		console.log("ok");
 		var that = this;
-		window.addEventListener("keypress", function(e){
-			pressKey = e.keyCode;
-			if(pressKey == that.cross[0]) //Z
+		pressKey = that.dirrection;
+		if(pressKey == 0) //Z
+		{
+			that.dirrection = 0;
+			that.get_possibility();
+		}
+		else if(pressKey == 1) //S
+		{
+			that.dirrection = 1;
+			that.get_possibility();
+		}
+		else if(pressKey == 2) //Q
+		{
+			that.dirrection = 2;
+			that.get_possibility();
+		}
+		else if(pressKey == 3) //D
+		{
+			that.dirrection = 3;
+			that.get_possibility();
+		}
+		else if(pressKey == 4) //B
+		{
+			that.pose_bombe();
+		}
+		//réinitialisation de la position du perso
+		that.remove_player();
+		that.display();
+	}
+
+	//Check if it's possible to move in this dirrection
+	this.get_possibility = function()
+	{
+		if(this.dirrection == 0) // go Top
+		{
+			if(this.posX-1 != 0)
 			{
-				that.dirrection = 0;
-				that.get_possibility();
+				if(new_map.game[this.posX-1][this.posY] == 1)
+				{
+					if((this.posX-1 != this.bombe_x) || (this.posY != this.bombe_y)) return 1;
+				}
 			}
-			else if(pressKey == that.cross[1]) //S
+		}
+		else if(this.dirrection == 1) // go Bottom
+		{
+			if(this.posX+1 != new_map.length_array-1)
 			{
-				that.dirrection = 1;
-				that.get_possibility();
+				if(new_map.game[this.posX+1][this.posY] == 1)
+				{
+					if((this.posX+1 != this.bombe_x) || (this.posY != this.bombe_y)) return 1;
+				}
 			}
-			else if(pressKey == that.cross[2]) //Q
+		}
+		else if(this.dirrection == 2) // go Left
+		{
+			if(this.posY-1 != 0)
 			{
-				that.dirrection = 2;
-				that.get_possibility();
+				if(new_map.game[this.posX][this.posY-1] == 1)
+				{
+					if((this.posX != this.bombe_x) || (this.posY-1 != this.bombe_y)) return 1;
+				}
 			}
-			else if(pressKey == that.cross[3]) //D
+		}
+		else if(this.dirrection == 3) // go Right
+		{
+			if(this.posY+1 != new_map.length_array-1)
 			{
-				that.dirrection = 3;
-				that.get_possibility();
+				if(new_map.game[this.posX][this.posY+1] == 1)
+				{
+					if((this.posX != this.bombe_x) || (this.posY+1 != this.bombe_y)) return 1;
+				}
 			}
-			else if(pressKey == that.cross[4]) //B
-			{
-				that.pose_bombe();
-			}
-			//réinitialisation de la position du perso
-			that.remove_player();
-			that.display();
-		});
+		}
+		return 0;
 	}
 
 	//
-		this.pose_bombe = function()
-		{
+	this.pose_bombe = function()
+	{
 
-			var newBombe = new bomber.bombe(this.posX, this.posY, this.bombe_type);
-	        // création d'une bombe supplémentaire dans le tableau
-			bomber.all_bombs.push(newBombe);
-			newBombe.display();
-			newBombe.remove_bombe();
-			console.log(bomber.all_bombs);
-		}
+		var newBombe = new bomber.bombe(this.posX, this.posY, this.bombe_type);
+		// création d'une bombe supplémentaire dans le tableau
+		bomber.all_bombs.push(newBombe);
+		newBombe.display();
+		newBombe.remove_bombe();
+		console.log(bomber.all_bombs);
+	}
 }
