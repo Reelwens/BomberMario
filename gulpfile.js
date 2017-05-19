@@ -79,7 +79,7 @@ gulp.task( 'js', function()
 {
     return gulp.src( ['./src/scripts/*.js'] )        // Get JS files
         .pipe( concat( 'main.js' ) )     // Concat in one file
-        .pipe( uglify() )                // Minify them (problem with ES6)
+        //.pipe( uglify() )                // Minify them (problem with ES6)
         .pipe( gulp.dest( './dist/scripts/' ) );     // Put it in folder
 } );
 
