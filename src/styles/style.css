@@ -1,7 +1,22 @@
 body{
-	background:#eee;
 	font-family:Helvetica,Arial;
 	font-size:14px;
+    background: #d0c5c5;
+}
+
+img.pipe {
+    position: absolute;
+}
+
+.pipe_1 {
+    left: 70%;
+}
+
+.pipe_2 {
+    bottom: 0%;
+    left: 10%;
+    transform: rotate(180deg);
+    will-change: transform;
 }
 
 .clearBoth{
@@ -18,7 +33,7 @@ body{
 table
 {
 	border-collapse: collapse;
-	margin: auto;
+	margin: 150px auto;
 }
 
 table td
