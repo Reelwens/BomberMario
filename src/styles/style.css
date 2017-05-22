@@ -1,15 +1,16 @@
 body{
 	font-family:Helvetica,Arial;
 	font-size:14px;
-    background: #d0c5c5;
+    background: #b7efef;
 }
 
 img.pipe {
     position: absolute;
+    width: 150px;
 }
 
 .pipe_1 {
-    left: 70%;
+    left: 75%;
 }
 
 .pipe_2 {
@@ -23,6 +24,10 @@ img.pipe {
 	clear: both;
 }
 
+.game {
+    margin: auto;
+    margin: calc(50vh - 272px) auto calc(50vh - 272px) auto;
+}
 
 /************************************
 
@@ -33,7 +38,6 @@ img.pipe {
 table
 {
 	border-collapse: collapse;
-	margin: 150px auto;
 }
 
 table td
