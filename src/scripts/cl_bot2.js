@@ -162,10 +162,10 @@ bomber.bot = function(id, posX=1, posY=1)
 	this.choose_path = function()
 	{
 		var all_possibility = [[(this.posX -1), this.posY], [this.posX, (this.posY -1)], [(this.posX +1), this.posY], [this.posX, (this.posY +1)]];
-		for(let i = 0; i < 4; i++)
-		{
-			if() all_possibility.splice(i, 1);
-		}
+//		for(let i = 0; i < 4; i++)
+//		{
+//			if() all_possibility.splice(i, 1);
+//		}
 		console.log(all_possibility);
 		var rand = get_random(0, all_possibility.length);
 		this.posX = all_possibility[rand][0];
@@ -225,7 +225,7 @@ bomber.bot = function(id, posX=1, posY=1)
 			this.bomb_limit--; 
 
 			id++;
-
+//			this.run_away();
 			var that = this;
 			setTimeout(function(){
 				that.bomb_x = 0;
