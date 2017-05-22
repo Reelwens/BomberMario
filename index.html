@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>BomberMario</title>
-    <meta name="description" content="Incarnez Mario et défiez vos joueurs dans un Bomberman unique en son genre." />
+    <title>bomberMario</title>
+    <meta name="description" content="Incarnez Mario et défiez vos joueurs dans un bomberman unique en son genre." />
 
     <link rel="stylesheet" href="src/styles/initialiser.css" />
 		<link rel="stylesheet" href="src/styles/style.css" />
@@ -17,8 +17,16 @@
   
   <div class="game"></div>
   
+  <select name="size_map" id="size">
+  	<option value="9">Small</option>
+  	<option value="17" checked>Medium</option>
+  	<option value="27">Large</option>
+  	<option value="37">Hudge</option>
+  </select>
+  
 <script src="src/scripts/librairy.js"></script>
 <script src="src/scripts/cl_game.js"></script>
+<script src="src/scripts/cl_bonus.js"></script>
 <script src="src/scripts/cl_bot2.js"></script>
 <script src="src/scripts/cl_bomb.js"></script>
 <script src="src/scripts/cl_player.js"></script>

@@ -4,13 +4,13 @@ bomber.bot = function()
 {
 	this.posX = 1;
 	this.posY = new_map.length_array-2;
-	this.bombe_reach = 3;
+	this.bomb_reach = 3;
 	//	this.speed = 100;
 	this.personnage = {};
 	this.dirrection = 0;
 	this.is_alive = true;
 	this.next_dir; // prochaine possibilité
-	this.t = 100; // propriété réactivité en milisecs : tous les combiens il va bouger, combien il va prendre des risques de s'approcher des bombes
+	this.t = 100; // propriété réactivité en milisecs : tous les combiens il va bouger, combien il va prendre des risques de s'approcher des bombs
 	//this.cross = [122, 115, 113, 100, 98]; //z, s, q, d (déplacer le bot..
 
 	//création du bot et position sur la grille
@@ -50,7 +50,7 @@ bomber.bot = function()
 
 	// ######## get_posibility à récupérer, faire un return 0/1, pour les this.next_dir
 
-	// ######## isSafe(case) check si il y a une bombe à prox à moins de 2t sec d'exploser
+	// ######## isSafe(case) check si il y a une bomb à prox à moins de 2t sec d'exploser
 
 	this.live = function()
 	{
@@ -60,7 +60,7 @@ bomber.bot = function()
 		if(this.is_alive)  window.requestAnimationFrame(that.live);
 	}
 
-	//	déplacement du perso suivant les touches Z, S, Q, D et pose de bombe avec la touche B
+	//	déplacement du perso suivant les touches Z, S, Q, D et pose de bomb avec la touche B
 	this.move = function()
 	{
 		console.log("ok");
@@ -88,7 +88,7 @@ bomber.bot = function()
 		}
 		else if(pressKey == 4) //B
 		{
-			that.pose_bombe();
+			that.pose_bomb();
 		}
 		//réinitialisation de la position du perso
 		that.remove_player();
@@ -104,7 +104,7 @@ bomber.bot = function()
 			{
 				if(new_map.game[this.posX-1][this.posY] == 1)
 				{
-					if((this.posX-1 != this.bombe_x) || (this.posY != this.bombe_y)) return 1;
+					if((this.posX-1 != this.bomb_x) || (this.posY != this.bomb_y)) return 1;
 				}
 			}
 		}
@@ -114,7 +114,7 @@ bomber.bot = function()
 			{
 				if(new_map.game[this.posX+1][this.posY] == 1)
 				{
-					if((this.posX+1 != this.bombe_x) || (this.posY != this.bombe_y)) return 1;
+					if((this.posX+1 != this.bomb_x) || (this.posY != this.bomb_y)) return 1;
 				}
 			}
 		}
@@ -124,7 +124,7 @@ bomber.bot = function()
 			{
 				if(new_map.game[this.posX][this.posY-1] == 1)
 				{
-					if((this.posX != this.bombe_x) || (this.posY-1 != this.bombe_y)) return 1;
+					if((this.posX != this.bomb_x) || (this.posY-1 != this.bomb_y)) return 1;
 				}
 			}
 		}
@@ -134,7 +134,7 @@ bomber.bot = function()
 			{
 				if(new_map.game[this.posX][this.posY+1] == 1)
 				{
-					if((this.posX != this.bombe_x) || (this.posY+1 != this.bombe_y)) return 1;
+					if((this.posX != this.bomb_x) || (this.posY+1 != this.bomb_y)) return 1;
 				}
 			}
 		}
@@ -142,14 +142,14 @@ bomber.bot = function()
 	}
 
 	//
-	this.pose_bombe = function()
+	this.pose_bomb = function()
 	{
 
-		var newBombe = new bomber.bombe(this.posX, this.posY, this.bombe_type);
-		// création d'une bombe supplémentaire dans le tableau
-		bomber.all_bombs.push(newBombe);
-		newBombe.display();
-		newBombe.remove_bombe();
+		var newbomb = new bomber.bomb(this.posX, this.posY, this.bomb_type);
+		// création d'une bomb supplémentaire dans le tableau
+		bomber.all_bombs.push(newbomb);
+		newbomb.display();
+		newbomb.remove_bomb();
 		console.log(bomber.all_bombs);
 	}
 }

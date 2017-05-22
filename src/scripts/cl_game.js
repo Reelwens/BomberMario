@@ -4,7 +4,8 @@ bomber.game_elem = document.querySelector(".game");
 // insertion des valeurs 0 dans le tableau (grille)
 bomber.map = function()
 {
-	this.length_array = 17;
+	this.wanted = document.body.querySelector("#size");
+	this.length_array = this.wanted.value;
 	this.game = new Array(this.length_array); // js array that stock all block type
 	this.types = [0, 1, 2, 3]; // Block type
 	

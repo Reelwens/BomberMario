@@ -10,11 +10,16 @@ bomber.bot = function(id, posX=1, posY=1)
 	this.is_alive = true; // Player Status
 	this.personnage = {}; //Html element of the player 
 	this.dirrection = 0; //Current dirrection of the player
-	this.t = 500; // number of millisecon for bot reaction
+	this.t = 300; // number of millisecon for bot reaction
+	this.safe_cases = [];
+	this.safe_path = [];
 
-	this.bombe_reach = 1; // Reach of the bomb
-	this.bombe_timer = 1; // Timer of the bomb
+	this.bomb_reach = 1; // Reach of the bomb
+	this.bomb_timer = 1; // Timer of the bomb
 	this.bomb_limit = 1; // Limit of the bomb the player can pose
+	this.bomb_limit_max = this.bomb_limit;
+	this.bomb_x;
+	this.bomb_y;
 
 	//création du perso et position sur la grille
 	this.display = function()
@@ -87,35 +92,92 @@ bomber.bot = function(id, posX=1, posY=1)
 		}
 		else if(this.dirrection > 3) 
 		{
-			this.pose_bombe();
+			this.pose_bomb();
 			return false;
 		}
 		return true;
 	}
 
-	// déplacement du perso suivant les touches Z, S, Q, D et pose de bombe avec la touche B
+	// déplacement du perso suivant les touches Z, S, Q, D et pose de bomb avec la touche B
 	this.move = function()
 	{
 		var that = this;
 		if(this.is_alive == true)
 		{
-			do
+			if(this.bomb_limit < this.bomb_limit_max)
 			{
-				this.dirrection = get_random(0, 4);
+				this.run_away();
 			}
-			while(this.get_possibility());
+			else{
+				do
+				{
+					this.dirrection = get_random(0, 5); // Choose his direction.
+					//run away
+				}
+				while(this.get_possibility());
+			}
 			this.remove_player();
 			that.display();
+			that.check_bonus();
 			setTimeout(function(){
 				that.move();
 			}, that.t);
 		}
 	}
 
-	// 
-		this.check_bomb = function(){
-		if(new_bomb.length == 0) return true;
-		else if(this.dirrection == 0)
+	this.run_away = function()
+	{
+		if(this.safe_cases.length == 0)
+		{
+			var start_check_1 = this.bomb_reach+1;
+			var start_check_2 = 0-(this.bomb_reach+1);
+			var indice = 0;
+			for(let i = start_check_2; i <= start_check_1; i++)
+			{
+				for(let j = start_check_2; j <= start_check_1; j++)
+				{
+					var x = parseInt(this.posX - i);
+					var y = parseInt(this.posY - j);
+					if((x >= 0) && (y >= 0))
+					{
+						if((x < (new_map.game.length-1)) && (y < (new_map.game.length-1)))
+						{
+							if((x != this.bomb_x) || (y != this.bomb_y))
+							{
+								if(new_map.game[x][y] == 1)
+								{
+									this.safe_cases[indice] = [x, y];
+									indice++;
+								}
+							}
+						}
+					}
+				}
+			}
+			this.choose_path();
+			console.log(this.safe_cases);
+		}
+	}
+	
+	this.choose_path = function()
+	{
+		var all_possibility = [[(this.posX -1), this.posY], [this.posX, (this.posY -1)], [(this.posX +1), this.posY], [this.posX, (this.posY +1)]];
+		for(let i = 0; i < 4; i++)
+		{
+			if() all_possibility.splice(i, 1);
+		}
+		console.log(all_possibility);
+		var rand = get_random(0, all_possibility.length);
+		this.posX = all_possibility[rand][0];
+		this.posY = all_possibility[rand][1];
+		this.remove_player();
+		this.display();
+	}
+
+	// Check if there is a bomb in next case
+	this.check_bomb = function(){
+		if(new_bomb.length == 0) return true; // if no bomb on the map
+		else if(this.dirrection == 0) //
 		{
 			for(var i = 0; i < new_bomb.length; i++)
 			{
@@ -143,32 +205,60 @@ bomber.bot = function(id, posX=1, posY=1)
 				if((this.posX != new_bomb[i].posX) || (this.posY+1 != new_bomb[i].posY)) return true;
 			}
 		}
+		else if(this.dirrection == 4) this.pose_bomb();
 		else return false;
 	}
 
 	//
-	this.pose_bombe = function()
+	this.pose_bomb = function()
 	{
 
 		if(this.bomb_limit > 0)
 		{
 			var length_array  = new_bomb.length;
-			new_bomb[length_array] = new bomber.bombe(id, this.posX, this.posY, this.bombe_reach, 1, this.bombe_timer); //posX, posY, reach, power, timeOut
-			this.bombe_x = this.posX;
-			this.bombe_y = this.posY;
+			new_bomb[length_array] = new bomber.bomb(id, this.posX, this.posY, this.bomb_reach, 1, this.bomb_timer); //posX, posY, reach, power, timeOut
+			this.bomb_x = this.posX;
+			this.bomb_y = this.posY;
 			new_bomb[length_array].display();
-			new_bomb[length_array].remove_bombe();
+			new_bomb[length_array].remove_bomb();
 
 			this.bomb_limit--; 
-			
+
 			id++;
 
 			var that = this;
 			setTimeout(function(){
-				that.bombe_x = 0;
-				that.bombe_y = 0;
+				that.bomb_x = 0;
+				that.bomb_y = 0;
 				that.bomb_limit++;
-			}, this.bombe_timer*1000);
+			}, this.bomb_timer*1000);
 		}
+	}
+
+	this.check_bonus = function()
+	{
+		if(new_bonus.length == 0) return true;
+		else
+		{
+			for(var i = 0; i < new_bonus.length; i++)
+			{
+				if((this.posX == new_bonus[i].posX) && (this.posY == new_bonus[i].posY)) 
+				{
+					this.check_bonus_type(i);
+				}
+			}
+		}
+	}
+
+	this.check_bonus_type = function(i)
+	{
+		if(new_bonus[i].type == "timer") this.bomb_timer -= 0.2;
+		else if(new_bonus[i].type == "reach") this.bomb_reach++;
+		else if(new_bonus[i].type == "limit") 
+		{
+			this.bomb_limit++;
+			this.bomb_limit_max ++;
+		}
+		new_bonus[i].remove_item();
 	}
 }

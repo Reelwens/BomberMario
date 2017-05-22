@@ -1,3 +1,3 @@
-# Mario Bomberman
+# Mario bomberman
 
-#### Incarnez Mario et défiez vos amis dans un Bomberman unique en son genre.
+#### Incarnez Mario et défiez vos amis dans un bomberman unique en son genre.

@@ -106,3 +106,23 @@ table .case-3
 	background-image: url(../img/fire_2.png);
 	background-size: cover;
 }
+
+/************************************
+
+		$-Bonus
+
+*************************************/
+.bonus
+{
+	position: absolute;
+	height: 32px;
+	width: 32px;
+	top: 0px;
+	left: 0px;
+	background-size: cover;
+}
+
+.bonus.timer {background: url(../img/bomb-timer.png);}
+.bonus.limit {background: url(../img/bomb-limit.png);}
+.bonus.reach {background: url(../img/bomb-reach.png);}
+

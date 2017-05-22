@@ -1,4 +1,4 @@
-bomber.fire = function(posX, posY, direction, remain)
+bomber.fire = function(posX, posY, direction, remain, bomb_id)
 {
 	this.posX = posX;
 	this.posY = posY;
@@ -6,6 +6,8 @@ bomber.fire = function(posX, posY, direction, remain)
 	this.remain = remain-1; // the remaining fire to creat
 	this.fire_dis; // displayed representation of the fire
 	this.kill = false; // if it's kill a player set to true
+	this.bomb_id = bomb_id;
+	this.cell = document.body.querySelector(".cel-" + this.posX + "-" + this.posY); //Cell where fire is 
 
 	this.display = function()
 	{
@@ -24,7 +26,20 @@ bomber.fire = function(posX, posY, direction, remain)
 			{
 				this.fire_dis = document.createElement("div");
 				this.fire_dis.classList.add("fire")
-				document.body.querySelector(".cel-" + this.posX + "-" + this.posY).appendChild(this.fire_dis);
+				this.cell.appendChild(this.fire_dis);
+				var there_a_bomb = document.body.querySelector(".cel-" + this.posX + "-" + this.posY + " .bomb");
+				if(there_a_bomb != null)
+				{
+					var id = parseInt(there_a_bomb.getAttribute("data-key"));
+					for(var i = 0; i < new_bomb.length; i++)
+					{
+						if(this.id == new_bomb[i].id) 
+						{
+							new_bomb[i].explosion();
+							break;
+						}
+					}
+				}
 
 				var that = this;
 				that.verify();
@@ -42,7 +57,20 @@ bomber.fire = function(posX, posY, direction, remain)
 			current_cell.classList.remove("case-2");
 			current_cell.classList.add("case-1");
 			current_cell.classList.add("type-" + cell_type);
+
+			if(get_random(0, 5) < 2)
+				var type = get_random(1, 3);
+			if(type == 1 ) this.creat_bonus("timer");
+			else if(type == 2 ) this.creat_bonus("reach");
+			else if(type == 3 ) this.creat_bonus("limit");
 		}
+	}
+
+	this.creat_bonus = function(type_bonus)
+	{
+		var lenght_array = new_bonus.length;
+		new_bonus[lenght_array] = new bomber.bonus(lenght_array, type_bonus, this.posX, this.posY);
+		new_bonus[lenght_array].display();
 	}
 
 	this.fire_remove = function()

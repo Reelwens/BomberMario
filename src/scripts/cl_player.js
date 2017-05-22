@@ -12,8 +12,8 @@ bomber.player = function(id, posX=1, posY=1)
 	this.dirrection = 0; //Current dirrection of the player 
 	this.cross = [122, 115, 113, 100, 98]; //z, s, q, d (Permit player to move)
 
-	this.bombe_reach = 1; // Reach of the bomb
-	this.bombe_timer = 1; // Timer of the bomb
+	this.bomb_reach = 1; // Reach of the bomb
+	this.bomb_timer = 2; // Timer of the bomb
 	this.bomb_limit = 1; // Limit of the bomb the player can pose
 
 	//création du perso et position sur la grille
@@ -75,7 +75,7 @@ bomber.player = function(id, posX=1, posY=1)
 		}
 	}
 
-	// déplacement du perso suivant les touches Z, S, Q, D et pose de bombe avec la touche B
+	// déplacement du perso suivant les touches Z, S, Q, D et pose de bomb avec la touche B
 	this.move = function()
 	{
 		var that = this;
@@ -105,11 +105,12 @@ bomber.player = function(id, posX=1, posY=1)
 				}
 				else if(pressKey == that.cross[4]) //B
 				{
-					that.pose_bombe();
+					that.pose_bomb();
 				}
 				//réinitialisation de la position du perso
 				that.remove_player();
 				that.display();
+				that.check_bonus();
 			}
 		});
 	}
@@ -147,29 +148,52 @@ bomber.player = function(id, posX=1, posY=1)
 		else return false;
 	}
 
-	//
-	this.pose_bombe = function()
+	// Pose bomb
+	this.pose_bomb = function()
 	{
 
 		if(this.bomb_limit > 0)
 		{
 			var length_array  = new_bomb.length;
-			new_bomb[length_array] = new bomber.bombe(id, this.posX, this.posY, this.bombe_reach, 1, this.bombe_timer); //posX, posY, reach, power, timeOut
-			this.bombe_x = this.posX;
-			this.bombe_y = this.posY;
+			new_bomb[length_array] = new bomber.bomb(id, this.posX, this.posY, this.bomb_reach, 1, this.bomb_timer); //posX, posY, reach, power, timeOut
+			this.bomb_x = this.posX;
+			this.bomb_y = this.posY;
 			new_bomb[length_array].display();
-			new_bomb[length_array].remove_bombe();
+			new_bomb[length_array].remove_bomb();
 
 			this.bomb_limit--;
-			
+
 			id++;
 
 			var that = this;
 			setTimeout(function(){
-				that.bombe_x = 0;
-				that.bombe_y = 0;
+				that.bomb_x = 0;
+				that.bomb_y = 0;
 				that.bomb_limit++;
-			}, this.bombe_timer*1000);
+			}, this.bomb_timer*1000);
 		}
+	}
+
+	this.check_bonus = function()
+	{
+		if(new_bonus.length == 0) return true;
+		else
+		{
+			for(var i = 0; i < new_bonus.length; i++)
+			{
+				if((this.posX == new_bonus[i].posX) && (this.posY == new_bonus[i].posY)) 
+				{
+					this.check_bonus_type(i);
+				}
+			}
+		}
+	}
+	
+	this.check_bonus_type = function(i)
+	{
+		if(new_bonus[i].type == "timer") this.bomb_timer -= 0.2;
+		else if(new_bonus[i].type == "reach") this.bomb_reach++;
+		else if(new_bonus[i].type == "limit") this.bomb_limit++;
+		new_bonus[i].remove_item();
 	}
 }
