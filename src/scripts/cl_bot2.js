@@ -8,7 +8,7 @@ bomber.bot = function(id, posX=1, posY=1)
 	this.posX = posX; // Indice in Vertical
 	this.posY = posY; // Indice in Horrizontal
 	this.is_alive = true; // Player Status
-	this.personnage = {}; //Html element of the player 
+	this.personnage = {}; //Html element of the player
 	this.dirrection = 0; //Current dirrection of the player
 	this.t = 300; // number of millisecon for bot reaction
 	this.safe_cases = [];
@@ -20,6 +20,82 @@ bomber.bot = function(id, posX=1, posY=1)
 	this.bomb_limit_max = this.bomb_limit;
 	this.bomb_x;
 	this.bomb_y;
+
+
+
+	// fonction move et fonction decide à merge dans cl_bot2.js màj.
+
+	// déplacement du bot
+	// il faudra faire la fonction pour décider si on pose une bombe ou pas...
+	this.move = function()
+	{
+		var that = this;
+		if(this.is_alive == true)
+		{
+
+			this.decide(); // ancienne fonction test : set la prochaine this.dirrection
+
+			this.remove_player();
+			that.display();
+			setTimeout(function(){
+				that.move();
+			}, that.t);
+		}
+	}
+
+	// decide la prochaine this.dirrection
+	this.decide = function()
+	{
+		var that = this;
+		var score_max = 0; // score Max
+		var move_max = 0; // conclusion du meilleur move
+		var move = 0;
+		for ( move = 0 ; move < 4; move++)
+		{
+			var score_move = 0;
+			this.dirrection = move ;
+
+			if ((this.get_possibility()) == false)
+				score_move += 1;
+
+
+			if (score_move >= score_max)
+			{
+				score_max = score_move;
+				move_max = move;
+			}
+		}
+
+		this.dirrection = move_max;
+
+
+		// var scoreM = 0; // score Max
+		// var moveM = ''; // move Max, au pire ce sera sur 'stay'
+		// var scoreA = 0; // score de la case Actuelle du forEach
+		// var cases = [4, 0, 1, 2, 3]; // 4stay – 0top – 1bottom – 2left – 3right
+		//
+		// for(var i = 0; i < cases.length; i++)
+		// {
+		// 	this.next_dir = cases[i];
+		// 	scoreA = 0
+		// 	scoreA += this.get_possibility() * 1; // avec un return 0 ou 1
+		// 	// scoreA += isSafe(case) * 0.5// avec return 0 ou 1
+		// 	// 	scoreA += isInteresting(case) * 0.2 // return 1 si on se dirige vers un objet ou un adversaire
+		// 	// 	  scoreA += isDirection() * 0.1 // return 1 si c'était la direction d'avant, pour éviter les aller retour si possible
+		// 	if (scoreA >= scoreM)
+		// 		moveM = cases[i];
+		// }
+	}
+
+	// ######## get_posibility à récupérer, faire un return 0/1, pour les this.next_dir
+
+	// ######## isSafe(case) check si il y a une bombe à prox à moins de 2t sec d'exploser
+
+
+
+
+
+
 
 	//création du perso et position sur la grille
 	this.display = function()
@@ -45,7 +121,6 @@ bomber.bot = function(id, posX=1, posY=1)
 				if(new_map.game[this.posX-1][this.posY] == 1)
 				{
 					if(this.check_bomb()) {
-						this.posX--;
 						return false;
 					}
 				}
@@ -58,7 +133,6 @@ bomber.bot = function(id, posX=1, posY=1)
 				if(new_map.game[this.posX+1][this.posY] == 1)
 				{
 					if(this.check_bomb()) {
-						this.posX++;
 						return false;
 					}
 				}
@@ -71,7 +145,6 @@ bomber.bot = function(id, posX=1, posY=1)
 				if(new_map.game[this.posX][this.posY-1] == 1)
 				{
 					if(this.check_bomb()) {
-						this.posY--;
 						return false;
 					}
 				}
@@ -84,13 +157,12 @@ bomber.bot = function(id, posX=1, posY=1)
 				if(new_map.game[this.posX][this.posY+1] == 1)
 				{
 					if(this.check_bomb()) {
-						this.posY++;
 						return false;
 					}
 				}
 			}
 		}
-		else if(this.dirrection > 3) 
+		else if(this.dirrection > 3)
 		{
 			this.pose_bomb();
 			return false;
@@ -98,81 +170,55 @@ bomber.bot = function(id, posX=1, posY=1)
 		return true;
 	}
 
-	// déplacement du perso suivant les touches Z, S, Q, D et pose de bomb avec la touche B
-	this.move = function()
-	{
-		var that = this;
-		if(this.is_alive == true)
-		{
-			if(this.bomb_limit < this.bomb_limit_max)
-			{
-				this.run_away();
-			}
-			else{
-				do
-				{
-					this.dirrection = get_random(0, 5); // Choose his direction.
-					//run away
-				}
-				while(this.get_possibility());
-			}
-			this.remove_player();
-			that.display();
-			that.check_bonus();
-			setTimeout(function(){
-				that.move();
-			}, that.t);
-		}
-	}
 
-	this.run_away = function()
-	{
-		if(this.safe_cases.length == 0)
-		{
-			var start_check_1 = this.bomb_reach+1;
-			var start_check_2 = 0-(this.bomb_reach+1);
-			var indice = 0;
-			for(let i = start_check_2; i <= start_check_1; i++)
-			{
-				for(let j = start_check_2; j <= start_check_1; j++)
-				{
-					var x = parseInt(this.posX - i);
-					var y = parseInt(this.posY - j);
-					if((x >= 0) && (y >= 0))
-					{
-						if((x < (new_map.game.length-1)) && (y < (new_map.game.length-1)))
-						{
-							if((x != this.bomb_x) || (y != this.bomb_y))
-							{
-								if(new_map.game[x][y] == 1)
-								{
-									this.safe_cases[indice] = [x, y];
-									indice++;
-								}
-							}
-						}
-					}
-				}
-			}
-			this.choose_path();
-			console.log(this.safe_cases);
-		}
-	}
-	
-	this.choose_path = function()
-	{
-		var all_possibility = [[(this.posX -1), this.posY], [this.posX, (this.posY -1)], [(this.posX +1), this.posY], [this.posX, (this.posY +1)]];
-//		for(let i = 0; i < 4; i++)
-//		{
-//			if() all_possibility.splice(i, 1);
-//		}
-		console.log(all_possibility);
-		var rand = get_random(0, all_possibility.length);
-		this.posX = all_possibility[rand][0];
-		this.posY = all_possibility[rand][1];
-		this.remove_player();
-		this.display();
-	}
+// 	this.run_away = function()
+// 	{
+// 		if(this.safe_cases.length == 0)
+// 		{
+// 			var start_check_1 = this.bomb_reach+1;
+// 			var start_check_2 = 0-(this.bomb_reach+1);
+// 			var indice = 0;
+// 			for(let i = start_check_2; i <= start_check_1; i++)
+// 			{
+// 				for(let j = start_check_2; j <= start_check_1; j++)
+// 				{
+// 					var x = parseInt(this.posX - i);
+// 					var y = parseInt(this.posY - j);
+// 					if((x >= 0) && (y >= 0))
+// 					{
+// 						if((x < (new_map.game.length-1)) && (y < (new_map.game.length-1)))
+// 						{
+// 							if((x != this.bomb_x) || (y != this.bomb_y))
+// 							{
+// 								if(new_map.game[x][y] == 1)
+// 								{
+// 									this.safe_cases[indice] = [x, y];
+// 									indice++;
+// 								}
+// 							}
+// 						}
+// 					}
+// 				}
+// 			}
+// 			this.choose_path();
+// 			console.log(this.safe_cases);
+// 		}
+// 	}
+//
+// 	this.choose_path = function()
+// 	{
+// 		var all_possibility = [[(this.posX -1), this.posY], [this.posX, (this.posY -1)], [(this.posX +1), this.posY], [this.posX, (this.posY +1)]];
+// //		for(let i = 0; i < 4; i++)
+// //		{
+// //			if() all_possibility.splice(i, 1);
+// //		}
+// 		console.log(all_possibility);
+// 		var rand = get_random(0, all_possibility.length);
+// 		this.posX = all_possibility[rand][0];
+// 		this.posY = all_possibility[rand][1];
+// 		this.remove_player();
+// 		this.display();
+// 	}
 
 	// Check if there is a bomb in next case
 	this.check_bomb = function(){
@@ -222,8 +268,7 @@ bomber.bot = function(id, posX=1, posY=1)
 			new_bomb[length_array].display();
 			new_bomb[length_array].remove_bomb();
 
-			this.bomb_limit--; 
-
+			this.bomb_limit--;
 			id++;
 //			this.run_away();
 			var that = this;
@@ -242,7 +287,7 @@ bomber.bot = function(id, posX=1, posY=1)
 		{
 			for(var i = 0; i < new_bonus.length; i++)
 			{
-				if((this.posX == new_bonus[i].posX) && (this.posY == new_bonus[i].posY)) 
+				if((this.posX == new_bonus[i].posX) && (this.posY == new_bonus[i].posY))
 				{
 					this.check_bonus_type(i);
 				}
@@ -254,7 +299,7 @@ bomber.bot = function(id, posX=1, posY=1)
 	{
 		if(new_bonus[i].type == "timer") this.bomb_timer -= 0.2;
 		else if(new_bonus[i].type == "reach") this.bomb_reach++;
-		else if(new_bonus[i].type == "limit") 
+		else if(new_bonus[i].type == "limit")
 		{
 			this.bomb_limit++;
 			this.bomb_limit_max ++;

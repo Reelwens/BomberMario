@@ -1,5 +1,73 @@
 // classe bot
 
+
+
+
+// fonction move et fonction decide à merge dans cl_bot2.js màj.
+
+// déplacement du perso suivant les touches Z, S, Q, D et pose de bombe avec la touche B
+this.move = function()
+{
+	var that = this;
+	if(this.is_alive == true)
+	{
+
+		this.decide(); // ancienne fonction test : set la prochaine this.dirrection
+
+		this.remove_player();
+		that.display();
+		setTimeout(function(){
+			that.move();
+		}, that.t);
+	}
+}
+
+// decide la prochaine this.dirrection
+this.decide = function()
+{
+	var that = this;
+	var score_max = 0; // score Max
+	var move_max = 0; // conclusion du meilleur move
+	var move = 0;
+	for ( move = 0 ; move < 5 ; move++)
+	{
+		var score_move = 0;
+		this.dirrection = move ;
+
+		if ((this.get_possibility()) == false)
+			score_move += 1;
+
+
+		if (score_move >= score_max)
+		{
+			score_max = score_move;
+			move_max = move;
+		}
+	}
+
+	this.dirrection = move_max;
+
+	// var scoreM = 0; // score Max
+	// var moveM = ''; // move Max, au pire ce sera sur 'stay'
+	// var scoreA = 0; // score de la case Actuelle du forEach
+	// var cases = [4, 0, 1, 2, 3]; // 4stay – 0top – 1bottom – 2left – 3right
+	//
+	// for(var i = 0; i < cases.length; i++)
+	// {
+	// 	this.next_dir = cases[i];
+	// 	scoreA = 0
+	// 	scoreA += this.get_possibility() * 1; // avec un return 0 ou 1
+	// 	// scoreA += isSafe(case) * 0.5// avec return 0 ou 1
+	// 	// 	scoreA += isInteresting(case) * 0.2 // return 1 si on se dirige vers un objet ou un adversaire
+	// 	// 	  scoreA += isDirection() * 0.1 // return 1 si c'était la direction d'avant, pour éviter les aller retour si possible
+	// 	if (scoreA >= scoreM)
+	// 		moveM = cases[i];
+	// }
+}
+
+// ######## get_posibility à récupérer, faire un return 0/1, pour les this.next_dir
+
+// ######## isSafe(case) check si il y a une bombe à prox à moins de 2t sec d'exploser
 bomber.bot = function()
 {
 	this.posX = 1;
@@ -39,11 +107,11 @@ bomber.bot = function()
 		{
 			this.next_dir = cases[i];
 			scoreA = 0
-			scoreA += this.get_possibility(); // avec un return 0 ou 1
-			// scoreA += isSafe(case) // avec return 0 ou 0.5
-			// 	scoreA += isInteresting(case) // return 0.2 si on se dirige vers un objet ou un adversaire
-			// 	  scoreA += isDirection() // return 0.1 si c'était la direction d'avant, pour éviter les aller retour si possible
-			if (scoreA >= scoreM)		
+			scoreA += this.get_possibility() * 1; // avec un return 0 ou 1
+			// scoreA += isSafe(case) * 0.5// avec return 0 ou 1
+			// 	scoreA += isInteresting(case) * 0.2 // return 1 si on se dirige vers un objet ou un adversaire
+			// 	  scoreA += isDirection() * 0.1 // return 1 si c'était la direction d'avant, pour éviter les aller retour si possible
+			if (scoreA >= scoreM)
 				moveM = cases[i];
 		}
 	}
@@ -55,7 +123,6 @@ bomber.bot = function()
 	this.live = function()
 	{
 		var that = this;
-//		this.test();
 		this.move();
 		if(this.is_alive)  window.requestAnimationFrame(that.live);
 	}
