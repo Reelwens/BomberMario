@@ -124,16 +124,25 @@ table .case-3
 		$-Player
 
 *************************************/
-.player
+.player, .bot
 {
 	position: absolute;
 	height: 32px;
 	width: 32px;
 	top: 0px;
 	left: 0px;
-	background-image: url(../img/mario.png);
 	background-size: cover;
 	z-index: 1;
+}
+
+.player
+{
+  background-image: url(../img/mario.png);
+}
+
+.bot
+{
+  background-image: url(../img/goomba.png);
 }
 
 /************************************

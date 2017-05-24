@@ -45,7 +45,7 @@ bomber.fire = function(posX, posY, direction, remain, bomb_id)
 				that.verify();
 				setTimeout(function(){
 					that.fire_remove();
-				}, 500);
+				}, 100);
 			}
 		}
 		else if(new_map.game[parseInt(this.posX)][parseInt(this.posY)] == 2)
@@ -58,7 +58,7 @@ bomber.fire = function(posX, posY, direction, remain, bomb_id)
 			current_cell.classList.add("case-1");
 			current_cell.classList.add("type-" + cell_type);
 
-			if(get_random(0, 5) < 3)
+			if(get_random(0, 10) <= 3)
 				var type = get_random(1, 3);
 			if(type == 1 ) this.creat_bonus("timer");
 			else if(type == 2 ) this.creat_bonus("reach");
