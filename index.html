@@ -19,17 +19,34 @@
     <img src="dist/img/sec01_bg_pipe.png" alt="Tuyau" class="pipe pipe_1">
     <img src="dist/img/sec01_bg_pipe.png" alt="Tuyau" class="pipe pipe_2">
 
-    <a href="#" class="start">Start Game</a>
-  
+    <div class="button">
+         <a href="#" class="start">Start Game</a>
+     </div>
+ 
+     <div class="bonusMenu">
+         <div class="limit">
+             <img src="dist/img/bomb-limit.png" alt="Nombre de bombes">
+             <span>1</span>
+         </div>
+         <div class="reach">
+             <img src="dist/img/bomb-reach.png" alt="Puissance des bombes">
+             <span>0</span>
+         </div>
+         <div class="timer">
+             <img src="dist/img/bomb-timer.png" alt="Délai d'explosion">
+             <span>0</span>
+         </div>
+     </div>
+
     <div class="game"></div>
-  
+
   <select name="size_map" id="size">
   	<option value="9">Small</option>
-  	<option value="17" checked>Medium</option>
+  	<option value="17" selected="true">Medium</option>
   	<option value="27">Large</option>
   	<option value="37">Hudge</option>
   </select>
-  
+
 <script src="src/scripts/librairy.js"></script>
 <script src="src/scripts/cl_game.js"></script>
 <script src="src/scripts/cl_bonus.js"></script>

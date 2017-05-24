@@ -7,7 +7,7 @@ bomber.fire = function(posX, posY, direction, remain, bomb_id)
 	this.fire_dis; // displayed representation of the fire
 	this.kill = false; // if it's kill a player set to true
 	this.bomb_id = bomb_id;
-	this.cell = document.body.querySelector(".cel-" + this.posX + "-" + this.posY); //Cell where fire is 
+	this.cell = document.body.querySelector(".cel-" + this.posX + "-" + this.posY); //Cell where fire is
 
 	this.display = function()
 	{
@@ -33,7 +33,7 @@ bomber.fire = function(posX, posY, direction, remain, bomb_id)
 					var id = parseInt(there_a_bomb.getAttribute("data-key"));
 					for(var i = 0; i < new_bomb.length; i++)
 					{
-						if(this.id == new_bomb[i].id) 
+						if(this.id == new_bomb[i].id)
 						{
 							new_bomb[i].explosion();
 							break;

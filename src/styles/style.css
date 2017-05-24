@@ -1,16 +1,16 @@
 body{
 	font-family:Helvetica,Arial;
 	font-size:14px;
-    background: #b7efef;
+    background: #d0c5c5;
 }
 
 img.pipe {
     position: absolute;
-    width: 150px;
+    width: 100px;
 }
 
 .pipe_1 {
-    left: 75%;
+    left: 70%;
 }
 
 .pipe_2 {
@@ -24,9 +24,50 @@ img.pipe {
 	clear: both;
 }
 
-.game {
-    margin: auto;
-    margin: calc(50vh - 272px) auto calc(50vh - 272px) auto;
+.button {
+    display: inline-block;
+    margin-left: 50vw;
+    transform: translateX(-50%);
+    background-color: #d86d46;
+    margin-top: 30px;
+    padding: 10px 0px;
+    border-left: 2px solid #ffe9dc;
+    border-top: 2px solid #ffe9dc;
+    border-bottom: 2px solid #2f2925;
+    border-right: 2px solid #2f2925;
+}
+
+.button:hover {
+    background-color: #d84646;
+    border-left: 2px solid #ffdcdc;
+    border-top: 2px solid #ffdcdc;
+    border-bottom: 2px solid #2f2525;
+    border-right: 2px solid #2f2525;
+}
+
+.button a.start {
+     padding: 10px 15px;
+     text-decoration: none;
+     color: white;
+     font-size: 18px;
+ }
+
+.bonusMenu {
+    margin-top: 10px;
+    display: inline-block;
+    margin-left: 50vw;
+    transform: translateX(-50%);
+}
+
+.bonusMenu div {
+    display: inline-block;
+    margin: 0 5px;
+}
+
+.bonusMenu div span {
+    font-size: 20px;
+    color: white;
+    transform: translateY(-50%);
 }
 
 /************************************
@@ -38,6 +79,7 @@ img.pipe {
 table
 {
 	border-collapse: collapse;
+	margin: 0px auto;
 }
 
 table td
@@ -144,4 +186,3 @@ table .case-3
 .bonus.timer {background: url(../img/bomb-timer.png);}
 .bonus.limit {background: url(../img/bomb-limit.png);}
 .bonus.reach {background: url(../img/bomb-reach.png);}
-
