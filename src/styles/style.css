@@ -4,6 +4,15 @@ body{
     background: #d0c5c5;
 }
 
+.clearBoth{
+	clear: both;
+}
+
+
+/*
+ * Image des tuyaux
+ */
+
 img.pipe {
     position: absolute;
     width: 100px;
@@ -20,9 +29,10 @@ img.pipe {
     will-change: transform;
 }
 
-.clearBoth{
-	clear: both;
-}
+
+/*
+ * Boutton 'start game'
+ */
 
 .button {
     display: inline-block;
@@ -52,8 +62,14 @@ img.pipe {
      font-size: 18px;
  }
 
+
+/*
+ * Bonus
+ */
+
 .bonusMenu {
-    margin-top: 10px;
+    margin-top: 30px;
+    margin-bottom: 10px;
     display: inline-block;
     margin-left: 50vw;
     transform: translateX(-50%);
@@ -70,7 +86,34 @@ img.pipe {
     transform: translateY(-50%);
 }
 
-/************************************
+
+/*
+ * Taille de la map
+ */
+
+.settings {
+    position: absolute;
+    margin-top: 30px;
+    margin-right: 60px;
+    top: 0%;
+    right: 0%;
+    color: #ffffff;
+    font-size: 16px;
+    text-align: center;
+}
+
+.settings #size {
+    background-color: #d86d46;
+    padding: 5px 10px;
+    border-left: 2px solid #ffe9dc;
+    border-top: 2px solid #ffe9dc;
+    border-bottom: 2px solid #2f2925;
+    border-right: 2px solid #2f2925;
+    height: 30px;
+    margin-top: 5px;
+}
+
+/**************************************
 
 		$-Board
 
@@ -138,11 +181,13 @@ table .case-3
 .player
 {
   background-image: url(../img/mario.png);
+  image-rendering: pixelated;
 }
 
 .bot
 {
   background-image: url(../img/goomba.png);
+  image-rendering: pixelated;
 }
 
 /************************************
@@ -159,6 +204,7 @@ table .case-3
 	left: 0px;
 	background-image: url(../img/bomb.png);
 	background-size: cover;
+    image-rendering: pixelated;
 }
 
 /************************************
