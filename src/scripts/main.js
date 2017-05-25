@@ -49,6 +49,14 @@ function start_game()
 
 start_game();
 
-function win() {
+function win()
+{
+  alert("Player win");
+  start_game();
+}
 
+function loose()
+{
+  alert("Player Loose");
+  start_game();
 }

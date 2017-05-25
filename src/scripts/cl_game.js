@@ -1,5 +1,6 @@
 var bomber = {}; //object
 bomber.game_elem = document.querySelector(".game");
+bomber.enemies = 1;
 
 // insertion des valeurs 0 dans le tableau (grille)
 bomber.map = function()
@@ -8,7 +9,8 @@ bomber.map = function()
 	this.length_array = this.wanted.value;
 	this.game = new Array(this.length_array); // js array that stock all block type
 	this.types = [0, 1, 2, 3]; // Block type
-	
+  this.Board = {};
+
 	/*
 		Block type :
 		0 and 1 --> Grass block, it's where we can walk
@@ -55,6 +57,7 @@ bomber.map = function()
 		}
 		tab += "</table>";
 		bomber.game_elem.innerHTML = tab;
+    this.Board
 	}
 
 }

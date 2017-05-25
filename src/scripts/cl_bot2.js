@@ -220,11 +220,14 @@ bomber.bot = function(id, posX=1, posY=1)
         this.danger_finish = true;
         return true;
       }
-      else if(this.check_player()) return false;
-      else
+      else if(this.check_player())
       {
         this.danger_finish = true;
         return true;
+      }
+      else
+      {
+        return false;
       }
     }
     else if(this.dirrection == 1)
@@ -235,11 +238,14 @@ bomber.bot = function(id, posX=1, posY=1)
         this.danger_finish = true;
         return true;
       }
-      else if(this.check_player()) return false;
-      else
+      else if(this.check_player())
       {
         this.danger_finish = true;
         return true;
+      }
+      else
+      {
+        return false;
       }
     }
     else if(this.dirrection == 2)
@@ -250,11 +256,14 @@ bomber.bot = function(id, posX=1, posY=1)
         this.danger_finish = true;
         return true;
       }
-      else if(this.check_player()) return false;
-      else
+      else if(this.check_player())
       {
         this.danger_finish = true;
         return true;
+      }
+      else
+      {
+        return false;
       }
     }
     else if(this.dirrection == 3)
@@ -265,18 +274,23 @@ bomber.bot = function(id, posX=1, posY=1)
         this.danger_finish = true;
         return true;
       }
-      else if(this.check_player()) return false;
-      else
+      else if(this.check_player())
       {
         this.danger_finish = true;
         return true;
+      }
+      else
+      {
+        return false;
       }
     }
   }
 
   this.check_player = function()
   {
-  return true;
+    if((new_player[0].posX == this.posX)&&(Math.abs(new_player[0].posY-this.posY) <= this.bomb_reach)) return true;
+    else if((new_player[0].posY == this.posY)&&(Math.abs(new_player[0].posX-this.posX) <= this.bomb_reach)) return true;
+    else return false;
   }
 
   this.get_safe_path = function()
@@ -375,52 +389,94 @@ bomber.bot = function(id, posX=1, posY=1)
     var move_x = new_player[0].posX - this.posX;
     var move_y = new_player[0].posY - this.posY;
     var valide_dirrection = false;
-    if(move_x <= 0)
+    if(Math.abs(move_x) > Math.abs(move_y))
     {
-      this.dirrection = 0;
-      if (this.get_possibility() == true) {
-        this.posX -=1;
-      }
-      else {
-        valide_dirrection = true;
-      }
+      valide_dirrection = this.move_to_player_x(move_x);
+      if(valide_dirrection == false) valide_dirrection = this.move_to_player_y(move_y);
     }
-    if(valide_dirrection)
-    {
-      if(move_x > 0)
-      {
-        this.dirrection = 1;
-        if (this.get_possibility() == true) {
-          this.posX +=1;
-          valide_dirrection = false;
-        }
-        else {
-          valide_dirrection = true;
-        }
-      }
-    }
-    if(valide_dirrection)
-    {
-      if(move_y <= 0)
-      {
-        this.dirrection = 2;
-        if (this.get_possibility() == true) {
-          this.posY -=1;
-          valide_dirrection = false;
-        }
-      }
-      if(valide_dirrection)
-      {
-        if(move_y > 0)
-        {
-          this.dirrection = 3;
-          if (this.get_possibility() == true) {
-            this.posY +=1;
-          }
-        }
-      }
+    else {
+      valide_dirrection = this.move_to_player_y(move_y);
+      if(valide_dirrection == false) valide_dirrection = this.move_to_player_x(move_x);
     }
   }
+
+this.move_to_player_x = function(x)
+{
+  if(x < 0)
+  {
+    this.dirrection = 0;
+    if(this.get_possibility())
+    {
+      this.posX -= 1;
+      return true;
+    }
+    else {
+      this.dirrection = 1;
+      if (this.get_possibility())
+      {
+        this.posX += 1;
+        return true;
+      }
+      return false;
+    }
+  }
+  else {
+    this.dirrection = 1;
+    if(this.get_possibility())
+    {
+      this.posX += 1;
+      return true;
+    }
+    else {
+      this.dirrection = 0;
+      if (this.get_possibility())
+      {
+        this.posX -= 1;
+        return true;
+      }
+      return false;
+    }
+  }
+}
+
+this.move_to_player_y = function(y)
+{
+  if(y < 0)
+  {
+    this.dirrection = 2;
+    if(this.get_possibility())
+    {
+      this.posY -= 1;
+      return true;
+    }
+    else {
+      this.dirrection = 3;
+      if (this.get_possibility())
+      {
+        this.posY += 1;
+        return true;
+      }
+      return false;
+    }
+  }
+  else {
+    this.dirrection = 3;
+    if(this.get_possibility())
+    {
+      this.posY += 1;
+      return true;
+    }
+    else {
+      this.dirrection = 2;
+      if (this.get_possibility())
+      {
+        this.posY -= 1;
+        return true;
+      }
+      return false;
+    }
+  }
+}
 
   // Create a new bomb objet
   this.pose_bomb = function()

@@ -20,6 +20,12 @@ bomber.fire = function(posX, posY, direction, remain, bomb_id)
 					new_player[i].remove_player();
 					new_player[i].is_alive = false;
 					this.kill = true;
+          if(new_player[i].type == "player") loose();
+          else if (new_player[i].type == "bot")
+          {
+            bomber.enemies--;
+            if(bomber.enemies == 0) win();
+          }
 				}
 			}
 			if(this.kill != true)
