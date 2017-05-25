@@ -11,10 +11,10 @@ bomber.bot = function(id, posX=1, posY=1)
   this.personnage = {}; //Html element of the player
   this.dirrection = 0; //Current dirrection of the player
   this.last_dirrection = -1; //last dirrection of the player
-  this.t = 100; // number of millisecon for bot reaction
+  this.t = 200; // number of millisecon for bot reaction
 
   this.bomb_reach = 1; // Reach of the bomb
-  this.bomb_timer = 1; // Timer of the bomb
+  this.bomb_timer = 900; // Timer of the bomb
   this.bomb_limit = 1; // Limit of the bomb the player can pose
   this.bomb_limit_max = this.bomb_limit;
   this.bomb_x;
@@ -499,7 +499,7 @@ this.move_to_player_y = function(y)
         that.bomb_x = 0;
         that.bomb_y = 0;
         that.bomb_limit++;
-      }, this.bomb_timer*1000);
+      }, this.bomb_timer);
     }
   }
 

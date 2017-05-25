@@ -10,7 +10,7 @@ html, body, .containerCloud{
 .containerCloud{
     background-color: #007ced;
     background: linear-gradient(to bottom, #007ced 1%,#cce7ff 100%);
-    position: absolute;
+    position: fixed;
     z-index: -1;
 }
 #cloud-intro{

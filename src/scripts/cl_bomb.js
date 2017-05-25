@@ -8,7 +8,7 @@ bomber.bomb = function(id, posX, posY, reach, power, timeOut)
 	this.posX = posX;
 	this.posY = posY;
 	this.reach = reach; // portée de l'explosion de la bomb en nb de cases
-	this.timeout = timeOut * 1000; // time before explosion
+	this.timeout = timeOut; // time before explosion
 	this.power = power; // life points cost for players when they explode
 	this.bomb_dis = {}; // displayed representation of the bomb
 
@@ -35,7 +35,7 @@ bomber.bomb = function(id, posX, posY, reach, power, timeOut)
 		{
 			var start_fire_1 = new bomber.fire(this.posX-1, this.posY, 0, this.reach, this.id); // top
 			var start_fire_2 = new bomber.fire(this.posX+1, this.posY, 1, this.reach, this.id); //bottom
-			var start_fire_3 = new bomber.fire(this.posX, this.posY-1, 2, this.reach, this.id); //left	
+			var start_fire_3 = new bomber.fire(this.posX, this.posY-1, 2, this.reach, this.id); //left
 			var start_fire_4 = new bomber.fire(this.posX, this.posY+1, 3, this.reach, this.id); // right
 			var start_fire_5 = new bomber.fire(this.posX, this.posY, 4, this.reach, this.id); // middle
 			start_fire_1.display();

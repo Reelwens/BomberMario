@@ -14,7 +14,7 @@ body{
  */
 
 img.pipe {
-    position: absolute;
+    position: fixed;
     width: 100px;
 }
 
@@ -39,7 +39,7 @@ img.pipe {
     margin-left: 50vw;
     transform: translateX(-50%);
     background-color: #d86d46;
-    margin-top: 30px;
+    margin-top: 20px;
     padding: 10px 0px;
     border-left: 2px solid #ffe9dc;
     border-top: 2px solid #ffe9dc;
@@ -68,7 +68,7 @@ img.pipe {
  */
 
 .bonusMenu {
-    margin-top: 30px;
+    margin-top: 10px;
     margin-bottom: 10px;
     display: inline-block;
     margin-left: 50vw;
@@ -118,11 +118,15 @@ img.pipe {
 		$-Board
 
 *************************************/
+.game
+{
+  position: relative;
+}
 
 table
 {
 	border-collapse: collapse;
-	margin: 0px auto;
+  margin: 0px auto;
 }
 
 table td
@@ -160,6 +164,31 @@ table .case-2
 table .case-3
 {
 	background: url(../img/block_3.png);
+}
+
+/************************************
+
+		$-Popup
+
+*************************************/
+.popup
+{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  opacity: 0.8;
+  top: 0px;
+  z-index: 10;
+  margin: 0px auto;
+  color: #efefef;
+  font-size: 2em;
+  text-align: center;
+}
+
+.popup p
+{
+  margin: 40% 0px;
 }
 
 /************************************
