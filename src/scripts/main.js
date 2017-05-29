@@ -36,19 +36,21 @@ function start_game()
 
 	new_player[0] = new bomber.player(0, 1, 1);
 	new_player[0].display();
+	new_player[0].display_bonus();
 	new_player[0].move();
 
 	new_player[1] = new bomber.bot(0, 1, new_map.length_array-2);
 	new_player[1].display();
 	new_player[1].move();
 
-	// new_player[2] = new bomber.bot(0, new_map.length_array-2, 1);
-	// new_player[2].display();
-	// new_player[2].move();
+	new_player[2] = new bomber.bot(0, new_map.length_array-2, 1);
+	new_player[2].display();
+	new_player[2].move();
 
-	// new_player[3] = new bomber.bot(0, new_map.length_array-2, new_map.length_array-2);
-	// new_player[3].display();
-	// new_player[3].move();
+	new_player[3] = new bomber.bot(0, new_map.length_array-2, new_map.length_array-2);
+	new_player[3].display();
+	new_player[3].move();
+  bomber.enemies = new_player.length-1;
 }
 
 start_game();

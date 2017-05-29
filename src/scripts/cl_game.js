@@ -1,6 +1,6 @@
 var bomber = {}; //object
 bomber.game_elem = document.querySelector(".game");
-bomber.enemies = 1;
+bomber.enemies;
 
 // insertion des valeurs 0 dans le tableau (grille)
 bomber.map = function()
